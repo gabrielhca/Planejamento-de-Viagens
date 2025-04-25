@@ -1,38 +1,38 @@
 #ifndef _FUNCOES_H
 #define _FUNCOES_H
 
-typedef struct data{
+typedef struct data {
     int dia;
     int mes;
     int ano;
 } Data;
 
-typedef struct horario{
+typedef struct horario {
     int horas;
     int minutos;
 } Horario;
 
-// circular
-typedef struct atracoes{
+typedef enum { NATUREZA, CULTURAL, FESTIVO, RELAXANTE } Tag;
+
+// Lista circular
+typedef struct atracoes {
     char atracao[40];
+    Tag categoria;
+    int pontuacao; // vai acumulando com as respostas
     Data periodo;
     Horario horaInicio;
     Horario horaFim;
     struct atracoes *prox;
 } Atracoes;
 
-// duplamente encadeada
+
+// Lista duplamente encadeada
 typedef struct cidades{
     char cidade[30];
-    Atracoes* atracao;
+    Atracoes* atracao; // ponteiro para a lista circular
     struct cidades *prox;
     struct cidades *ant;
 } Cidades;
-
-typedef struct regioesBrasil {
-    char regiao[30];
-    Cidades cidade;
-};
 
 typedef struct viagem {
     Cidades* cidade;
@@ -43,8 +43,13 @@ typedef struct viagem {
 } Viagem;
 
 typedef struct descritor {
-    Atrações *cauda;
+    Atracoes *cauda;
     int quantidade;
 } Descritor;
+
+
+// funções que personalizam a experiencia do usuario
+void aplicarQuestionario(int *natureza, int *cultural, int *festivo, int *relaxante);
+void aplicarPontuacaoNasAtracoes(Atracoes *lista, int natureza, int cultural, int festivo, int relaxante);
 
 #endif

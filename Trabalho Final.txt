@@ -26,3 +26,11 @@ Estrutura: Lista duplamente encadeada das cidades (permite navegar para frente/t
 Funcionalidades extras: Duração da estadia, ranking das atrações, ordem preferida de visita
 
 
+// definindo tags principais
+
+| Tag       | Descrição                                           | Ambiente oposto |
+|-----------|-----------------------------------------------------|------------------|
+| natureza  | trilhas, parques, mirantes, cachoeiras              | urbano           |
+| cultural  | museus, centros históricos, igrejas, feiras         | festivo          |
+| festivo   | festas locais, eventos, bares, shows                | cultural         |
+| relaxante | spas, cafés calmos, jardins, praias tranquilas      | aventureiro      |

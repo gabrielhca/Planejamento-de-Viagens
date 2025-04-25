@@ -69,3 +69,75 @@ void linkarAtracaoCidade (Cidades listaCidades, Atracoes listaAtracoes, const ch
     Atracoes* inicio = atracaoAtual;
 
 }
+
+
+// funções que personalizam a experiencia do usuario
+
+void aplicarQuestionario(int *natureza, int *cultural, int *festivo, int *relaxante) {
+    int resposta;
+
+    printf("Responda com o número da opção escolhida.\n");
+
+    // Pergunta 1
+    do {
+        printf("1) Você prefere passar o dia em contato com a natureza ou em um ambiente urbano cheio de opções modernas?\n");
+        printf("   1 - Natureza\n   2 - Urbano\n> ");
+        scanf("%d", &resposta);
+        if (resposta == 1) *natureza += 5;
+        else if (resposta == 2) *festivo += 5;
+        else printf("Resposta incorreta. Tente novamente.\n");
+    } while (resposta != 1 && resposta != 2);
+
+    // Pergunta 2
+    do {
+        printf("2) Você gostaria mais de visitar um museu histórico ou curtir uma festa local?\n");
+        printf("   1 - Museu\n   2 - Festa\n> ");
+        scanf("%d", &resposta);
+        if (resposta == 1) *cultural += 5;
+        else if (resposta == 2) *festivo += 5;
+        else printf("Resposta incorreta. Tente novamente.\n");
+    } while (resposta != 1 && resposta != 2);
+
+    // Pergunta 3
+    do {
+        printf("3) Você busca relaxar em lugares tranquilos ou viver experiências cheias de adrenalina?\n");
+        printf("   1 - Tranquilos\n   2 - Adrenalina\n> ");
+        scanf("%d", &resposta);
+        if (resposta == 1) *relaxante += 5;
+        else if (resposta == 2) *natureza += 5;
+        else printf("Resposta incorreta. Tente novamente.\n");
+    } while (resposta != 1 && resposta != 2);
+
+    // Pergunta 4
+    do {
+        printf("4) Você se sente mais confortável em locais silenciosos ou agitados?\n");
+        printf("   1 - Silenciosos\n   2 - Agitados\n> ");
+        scanf("%d", &resposta);
+        if (resposta == 1) *relaxante += 5;
+        else if (resposta == 2) *festivo += 5;
+        else printf("Resposta incorreta. Tente novamente.\n");
+    } while (resposta != 1 && resposta != 2);
+}
+
+void aplicarPontuacaoNasAtracoes(Atracoes *lista, int natureza, int cultural, int festivo, int relaxante) {
+    if (lista == NULL) return;
+
+    Atracoes *inicio = lista;
+    do {
+        switch (lista->categoria) {
+            case NATUREZA:
+                lista->pontuacao += natureza;
+                break;
+            case CULTURAL:
+                lista->pontuacao += cultural;
+                break;
+            case FESTIVO:
+                lista->pontuacao += festivo;
+                break;
+            case RELAXANTE:
+                lista->pontuacao += relaxante;
+                break;
+        }
+        lista = lista->prox;
+    } while (lista != inicio);
+}
