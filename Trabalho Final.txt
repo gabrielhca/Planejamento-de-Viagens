@@ -1,0 +1,28 @@
+Trabalho Final: 
+
+Tema: Solução usando lista duplamente encadeada (escolher tema)
+Entrega: Código + Relatório
+Grupos: até 3 alunos
+Data de entrega: 05/05/2025
+Datas das apresentações: 05, 06 e 07/05 (a combinar)
+O relatório deve conter as seguintes seções:
+
+Introdução: Explicação de como foi compreendido o problema, como a solução foi desenhada, que estruturas de dados foram utilizadas e como o problema foi resolvido.
+Documentação do código: Explicação detalhada das funções implementadas, com a descrição de como cada função foi construída e seu propósito no funcionamento geral das listas.
+Exemplos de uso: Demonstração de algumas operações feitas pela lista, com exemplos de código, entrada de dados e as saídas obtidas. 
+Conclusão: Reflexão sobre os desafios enfrentados durante a implementação e as principais lições aprendidas.
+
+Observações:
+
+Teste exaustivamente seu código para garantir o correto funcionamento das operações.
+Siga boas práticas de programação, como modularização, uso de variáveis com nomes claros e comentários explicativos.
+Use exemplos simples e claros no relatório para demonstrar o uso da lista.
+
+Planejamento de Viagens com Etapas e Atrações
+Criar uma organização para viagem com várias etapas (cidades), e em cada cidade há atrações a visitar.
+
+Estrutura: Lista duplamente encadeada das cidades (permite navegar para frente/trás). Cada cidade tem uma lista circular de atrações.
+
+Funcionalidades extras: Duração da estadia, ranking das atrações, ordem preferida de visita
+
+
