@@ -1,0 +1,110 @@
+# Belém
+Mangal das Garças
+NATUREZA
+Parque ambiental com viveiros de aves e mirante.
+Horario de Funcionamento: 07:00-18:00
+
+Mercado Ver-o-Peso
+CULTURAL
+Feira ao ar livre de iguarias regionais e artesanato.
+Horario de Funcionamento: 06:00-17:00
+
+Bar Point do Açaí
+FESTIVO
+Espaço com música ao vivo e pratos à base de açaí.
+Horario de Funcionamento: 18:00-01:00
+
+Estação das Docas (eventos)
+CULTURAL
+Shows e feiras culturais na área portuária revitalizada.
+Horario de Funcionamento: 19:00-00:00
+
+Pissolati Café
+RELAXANTE
+Café acolhedor e sofisticado, perfeito para relaxar e apreciar bebidas artesanais e doces.
+Horario de Funcionamento: 08:00-20:00
+
+# Goiânia
+Parque Flamboyant
+NATUREZA
+Jardins, lago e pista de caminhada.
+Horario de Funcionamento: 06:00-20:00
+
+Centro CULTURAL Oscar Niemeyer
+CULTURAL
+Exposições de arte e arquitetura moderna.
+Horario de Funcionamento: 10:00-18:00
+
+Bolshoi Pub
+FESTIVO
+Bar temático com música ao vivo e drinks artesanais.
+Horario de Funcionamento: 19:00-02:00
+
+Café Flor do Cerrado
+RELAXANTE
+Ambiente calmo com menu de cafés especiais.
+Horario de Funcionamento: 08:00-20:00
+
+# Porto Alegre
+
+Parque Farroupilha (Redenção)
+NATUREZA
+Largo histórico com pista de caminhada e feiras.
+Horario de Funcionamento: 05:00-22:00
+
+Mercado Público
+CULTURAL
+Comércio de comidas típicas e artesanato.
+Horario de Funcionamento: 07:00-19:00
+
+Festival de Jazz (Bola 8)
+FESTIVO
+Roda de jazz com músicos locais e convidados.
+Horario de Funcionamento: 20:00-00:00
+
+Boulevard Café
+RELAXANTE
+Espaço calmo com cafés especiais e leitura.
+Horario de Funcionamento: 08:00-22:00
+
+# Salvador
+Pelourinho
+CULTURAL
+Centro histórico com casarões coloniais e igrejas.
+Horario de Funcionamento: 09:00-17:00
+
+Farol da Barra
+NATUREZA
+Mirante e praia calma junto ao icônico farol.
+Horario de Funcionamento: 08:00-19:00
+
+Largo do Pelourinho (bloco)
+FESTIVO
+Shows de samba-reggae e festas de rua.
+Horario de Funcionamento: 20:00-02:00
+
+Café Literário da Fundação Casa de Jorge Amado
+RELAXANTE
+Espaço tranquilo para leitura e música ao vivo.
+Horario de Funcionamento: 17:00-22:00
+
+# Rio de Janeiro
+Cristo Redentor / Parque da Tijuca
+NATUREZA
+Trilha e vista panorâmica da cidade.
+Horario de Funcionamento: 08:00-18:00
+
+Museu do Amanhã
+CULTURAL
+Espaço de ciência e tecnologia interativa na zona portuária.
+Horario de Funcionamento: 10:00-18:00
+
+Lapa (Arcos e bares)
+FESTIVO
+Sede dos tradicionais blocos de samba e bares.
+Horario de Funcionamento: 18:00-03:00
+
+Praia de Copacabana (pôr do sol)
+RELAXANTE
+Caminhada no calçadão ao entardecer.
+Horario de Funcionamento: 17:00-19:00
