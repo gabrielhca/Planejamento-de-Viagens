@@ -36,9 +36,9 @@ typedef struct cidades{
 
 typedef struct viagem {
     Cidades* cidade;
-    data chegada;
+    Data chegada;
     Horario horaChegada;
-    data saida;
+    Data saida;
     Horario horaPartida;
 } Viagem;
 
