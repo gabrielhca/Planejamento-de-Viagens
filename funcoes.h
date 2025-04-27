@@ -11,6 +11,7 @@ typedef struct atracoes {
     char descricaoHorario[100];
     int pontuacao; // vai acumulando com as respostas
     struct atracoes *prox;
+    struct atracoes *ant;
 } Atracoes;
 
 // Lista duplamente encadeada
