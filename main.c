@@ -12,13 +12,13 @@ int main() {
 
     // questionario para experiencia personalizada
     aplicarQuestionario(&natureza, &cultural, &festivo, &relaxante);
-
+    
     // aplica pontuação nas atrações de cada cidade
     Cidades* cidadeAtual = listaCidades;
     while (cidadeAtual != NULL) {
         aplicarPontuacaoNasAtracoes(cidadeAtual->atracao, natureza, cultural, festivo, relaxante);
         cidadeAtual = cidadeAtual->prox;
     }
-
+    listarCidadesComAtracoes(listaCidades);
     return 0;
 }
