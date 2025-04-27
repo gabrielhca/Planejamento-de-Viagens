@@ -145,45 +145,57 @@ void aplicarPontuacaoNasAtracoes(Atracoes *lista, int natureza, int cultural, in
 void carregarDados(Cidades **listaCidades) {
     FILE *arquivo = fopen("cidadesAtracoes.txt", "r");
     if (arquivo == NULL) {
-        printf("Erro ao abrir o arquivo cidadesAtracoes.txt\n");
+        printf("Erro ao abrir o arquivo!\n");
         return;
     }
 
-    char nomeCidade[50];
-    char nomeAtracao[50];
+    char nomeCidade[30], nomeAtracao[40], descricao[100], descricaoHorario[100];
     int categoria;
-    char descricao[100];
-    char descricaoHorario[100];
-    //catergoria(natureza = 0, cultural = 1, festivo = 2, relaxante = 3)
-    while (fscanf(arquivo, "%99[^;];%99[^;];%d;%99[^;];%99[^\n]\n", nomeCidade, nomeAtracao, &categoria, descricao, descricaoHorario) == 5) { 
+    Cidades *cidadeAtual = NULL;
 
-        // ve se a cidade ja existe
-        Cidades* cidadeAtual = *listaCidades;
+    // Lê o arquivo linha por linha
+    while (fscanf(arquivo, "%[^;];%[^;];%d;%[^;];%[^\n]\n", nomeCidade, nomeAtracao, &categoria, descricao, descricaoHorario) == 5) {
+        // Verifica se a cidade já existe na lista
+        cidadeAtual = *listaCidades;
         while (cidadeAtual != NULL && strcmp(cidadeAtual->cidade, nomeCidade) != 0) {
             cidadeAtual = cidadeAtual->prox;
         }
 
-        // se nao encontrar, cria uma nova
+        // Se a cidade não foi encontrada, cria uma nova cidade
         if (cidadeAtual == NULL) {
             Cidades novaCidade;
             strcpy(novaCidade.cidade, nomeCidade);
             novaCidade.atracao = NULL;
-            novaCidade.prox = NULL;
+            novaCidade.prox = *listaCidades;
             novaCidade.ant = NULL;
-            inserirnoInicioCidade(listaCidades, novaCidade);
-            cidadeAtual = *listaCidades; // novo nó criado fica no início
+            *listaCidades = malloc(sizeof(Cidades));
+            **listaCidades = novaCidade;
+            cidadeAtual = *listaCidades;
         }
 
-        //cria atracao
+        // Cria uma nova atração
         Atracoes novaAtracao;
         strcpy(novaAtracao.atracao, nomeAtracao);
-        novaAtracao.categoria = (Tag)categoria;
+        novaAtracao.categoria = categoria;
         strcpy(novaAtracao.descricao, descricao);
         strcpy(novaAtracao.descricaoHorario, descricaoHorario);
-        novaAtracao.pontuacao = 0;
+        novaAtracao.pontuacao = 0;  // Inicializando a pontuação como 0
         novaAtracao.prox = NULL;
 
-        inserirAtracaoOrdenada(&(cidadeAtual->atracao), novaAtracao);
+        // Insere a atração na lista de atrações da cidade
+        if (cidadeAtual->atracao == NULL) {
+            cidadeAtual->atracao = malloc(sizeof(Atracoes));
+            *cidadeAtual->atracao = novaAtracao;
+            cidadeAtual->atracao->prox = cidadeAtual->atracao;  // Lista circular
+        } else {
+            Atracoes *atracaoAtual = cidadeAtual->atracao;
+            while (atracaoAtual->prox != cidadeAtual->atracao) {
+                atracaoAtual = atracaoAtual->prox;
+            }
+            atracaoAtual->prox = malloc(sizeof(Atracoes));
+            *atracaoAtual->prox = novaAtracao;
+            atracaoAtual->prox->prox = cidadeAtual->atracao;  // Mantém circularidade
+        }
     }
 
     fclose(arquivo);
