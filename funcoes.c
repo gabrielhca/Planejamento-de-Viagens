@@ -141,3 +141,50 @@ void aplicarPontuacaoNasAtracoes(Atracoes *lista, int natureza, int cultural, in
         lista = lista->prox;
     } while (lista != inicio);
 }
+
+void carregarDados(Cidades **listaCidades) {
+    FILE *arquivo = fopen("cidadesAtracoes.txt", "r");
+    if (arquivo == NULL) {
+        printf("Erro ao abrir o arquivo cidadesAtracoes.txt\n");
+        return;
+    }
+
+    char nomeCidade[50];
+    char nomeAtracao[50];
+    int categoria;
+    char descricao[100];
+    char descricaoHorario[100];
+    //catergoria(natureza = 0, cultural = 1, festivo = 2, relaxante = 3)
+    while (fscanf(arquivo, "%99[^;];%99[^;];%d;%99[^;];%99[^\n]\n", nomeCidade, nomeAtracao, &categoria, descricao, descricaoHorario) == 5) { 
+
+        // ve se a cidade ja existe
+        Cidades* cidadeAtual = *listaCidades;
+        while (cidadeAtual != NULL && strcmp(cidadeAtual->cidade, nomeCidade) != 0) {
+            cidadeAtual = cidadeAtual->prox;
+        }
+
+        // se nao encontrar, cria uma nova
+        if (cidadeAtual == NULL) {
+            Cidades novaCidade;
+            strcpy(novaCidade.cidade, nomeCidade);
+            novaCidade.atracao = NULL;
+            novaCidade.prox = NULL;
+            novaCidade.ant = NULL;
+            inserirnoInicioCidade(listaCidades, novaCidade);
+            cidadeAtual = *listaCidades; // novo nó criado fica no início
+        }
+
+        //cria atracao
+        Atracoes novaAtracao;
+        strcpy(novaAtracao.atracao, nomeAtracao);
+        novaAtracao.categoria = (Tag)categoria;
+        strcpy(novaAtracao.descricao, descricao);
+        strcpy(novaAtracao.descricaoHorario, descricaoHorario);
+        novaAtracao.pontuacao = 0;
+        novaAtracao.prox = NULL;
+
+        inserirAtracaoOrdenada(&(cidadeAtual->atracao), novaAtracao);
+    }
+
+    fclose(arquivo);
+}
