@@ -200,3 +200,33 @@ void carregarDados(Cidades **listaCidades) {
 
     fclose(arquivo);
 }
+void listarCidadesComAtracoes(Cidades *lista) {
+    if (lista == NULL) {
+        printf("Nenhuma cidade cadastrada.\n");
+        return;
+    }
+
+    Cidades *cidadeAtual = lista;
+    while (cidadeAtual != NULL) {
+        printf("Cidade: %s\n", cidadeAtual->cidade);
+
+        if (cidadeAtual->atracao == NULL) {
+            printf("  Nenhuma atração cadastrada.\n");
+        } else {
+            Atracoes *atracaoAtual = cidadeAtual->atracao;
+            Atracoes *inicio = atracaoAtual;
+            do {
+                printf("  - %s (%s)\n", atracaoAtual->atracao, 
+                    atracaoAtual->categoria == NATUREZA ? "Natureza" :
+                    atracaoAtual->categoria == CULTURAL ? "Cultural" :
+                    atracaoAtual->categoria == FESTIVO ? "Festivo" :
+                    atracaoAtual->categoria == RELAXANTE ? "Relaxante" : "Desconhecido"
+                );
+                atracaoAtual = atracaoAtual->prox;
+            } while (atracaoAtual != inicio); // porque é lista circular
+        }
+
+        printf("\n");
+        cidadeAtual = cidadeAtual->prox;
+    }
+}
