@@ -167,7 +167,7 @@ void carregarDados(Cidades **listaCidades) {
         novaAtracao.prox = NULL;
         novaAtracao.ant = NULL;
         
-        inserirAtracaoOrdenada(&cidadeAtual->atracao, novaAtracao);
+        inserirAtracao(&cidadeAtual->atracao, novaAtracao);
         }
     }
 
