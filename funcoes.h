@@ -8,7 +8,7 @@ typedef struct atracoes {
     char atracao[40];
     Tag categoria;
     char descricao[100];
-    char descricaoHorario[100];
+    char descricaoHorario[50];
     int pontuacao; // vai acumulando com as respostas
     struct atracoes *prox;
     struct atracoes *ant;
