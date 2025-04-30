@@ -43,6 +43,6 @@ void aplicarQuestionario(int *natureza, int *cultural, int *festivo, int *relaxa
 void aplicarPontuacaoNasAtracoes(Atracoes *lista, int natureza, int cultural, int festivo, int relaxante);
 Cidades* criaListaVazia();
 void inserirnoInicioCidade(Cidades **lista, Cidades novaCidade);
-void inserirAtracaoOrdenada(Atracoes **lista, Atracoes novaAtracao);
+void inserirAtracao(Atracoes **lista, Atracoes novaAtracao);
 
 #endif
