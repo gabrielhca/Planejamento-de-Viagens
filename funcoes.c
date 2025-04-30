@@ -174,6 +174,19 @@ void carregarDados(Cidades **listaCidades) {
     fclose(arquivo);
 }
 
+void listarCidades(Cidades *lista){
+    if(lista == NULL){
+        printf ("Nenhuma cidade cadastrada.\n");
+        return;
+    }
+
+    Cidades *cidadeAtual = lista;
+    while (cidadeAtual != NULL) {
+        printf("Cidade: %s\n", cidadeAtual->cidade);
+        cidadeAtual = cidadeAtual->prox;
+        printf("\n");
+    }
+
 
 void listarCidadesComAtracoes(Cidades *lista) {
     if (lista == NULL) {
@@ -205,3 +218,30 @@ void listarCidadesComAtracoes(Cidades *lista) {
         cidadeAtual = cidadeAtual->prox;
     }
 }
+
+//Função para definir a viagem e a estadia. Precisa linkar com as funções de aplicação do questionário e com as funções de ordenação das atrações de acordo com
+//a pontuação definida
+void definirViagem(Viagem* viagem, Cidades* cidade, int dias) {
+    viagem->cidade = cidade;
+    viagem->duracaoEstadia = dias;
+
+    printf("Viagem definida: %s por %d dias.\n", cidade->cidade, dias);
+}
+
+
+//Função para encontrar para qual cidade a pessoa irá viajar. 
+Cidades* buscarCidade(Cidades* lista, char nome[]) {
+    Cidades* atual = lista;
+
+    while (atual != NULL) {          
+        if (strcmp(atual->cidade, nome) == 0) {
+            return atual; // Retorna a cidade encontrada
+        }
+        atual = atual->prox;
+    }
+
+    printf("Cidade %s não encontrada.\n", nome);
+    return NULL;
+}
+
+
