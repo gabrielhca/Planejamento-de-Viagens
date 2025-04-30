@@ -21,12 +21,7 @@ typedef struct cidades{
     struct cidades *prox;
     struct cidades *ant;
 } Cidades;
-//na funcao linkarAtracaoCidade, tem esse tipo, porem n foi criado ent eu criei pra compilar.
-typedef struct cidadeAtracao {
-    struct cidades* cidade;
-    struct atracoes* atracao;
-    struct cidadeAtracao* prox;
-} CidadeAtracao;
+
 // Informações sobre a viagem do usuário
 typedef struct viagem {
     Cidades* cidade;
