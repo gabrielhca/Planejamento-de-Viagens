@@ -32,7 +32,7 @@ void inserirnoInicioCidade (Cidades** lista, Cidades novaCidade){
 /*Alterar depois para inserir as atrações de forma ordenada para manter organização
 Basicamente a mesma estrutura do anterior, nsere uma nova atração ao final da 
 lista circular duplamente encadeada. Caso a lista esteja vazia, a nova atração aponta para si mesma nos campos prox e ant*/
-void inserirAtracaoOrdenada (Atracoes** lista, Atracoes novaAtracao){
+void inserirAtracao(Atracoes** lista, Atracoes novaAtracao){
     Atracoes* nova = (Atracoes*)malloc(sizeof(Atracoes));
     if (nova == NULL){
         printf ("Erro na alocação de memória da Atração!\n");
