@@ -134,14 +134,13 @@ void carregarDados(Cidades **listaCidades) {
         return;
     }
 
-    char nomeCidade[30], nomeAtracao[40], descricao[100], descricaoHorario[100];
+    char nomeCidade[30], nomeAtracao[40], descricao[100], descricaoHorario[50];
     int categoria;
-    Cidades *cidadeAtual = NULL;
 
     // Lê o arquivo linha por linha
     while (fscanf(arquivo, "%[^;];%[^;];%d;%[^;];%[^\n]\n", nomeCidade, nomeAtracao, &categoria, descricao, descricaoHorario) == 5) {
         // Verifica se a cidade já existe na lista
-        cidadeAtual = *listaCidades;
+        Cidades *cidadeAtual = *listaCidades;
         while (cidadeAtual != NULL && strcmp(cidadeAtual->cidade, nomeCidade) != 0) {
             cidadeAtual = cidadeAtual->prox;
         }
@@ -153,8 +152,8 @@ void carregarDados(Cidades **listaCidades) {
             novaCidade.atracao = NULL;
             novaCidade.prox = *listaCidades;
             novaCidade.ant = NULL;
-            *listaCidades = malloc(sizeof(Cidades));
-            **listaCidades = novaCidade;
+            inserirnoInicioCidade(listaCidades, novaCidade);
+            
             cidadeAtual = *listaCidades;
         }
 
@@ -166,25 +165,16 @@ void carregarDados(Cidades **listaCidades) {
         strcpy(novaAtracao.descricaoHorario, descricaoHorario);
         novaAtracao.pontuacao = 0;  // Inicializando a pontuação como 0
         novaAtracao.prox = NULL;
-
-        // Insere a atração na lista de atrações da cidade
-        if (cidadeAtual->atracao == NULL) {
-            cidadeAtual->atracao = malloc(sizeof(Atracoes));
-            *cidadeAtual->atracao = novaAtracao;
-            cidadeAtual->atracao->prox = cidadeAtual->atracao;  // Lista circular
-        } else {
-            Atracoes *atracaoAtual = cidadeAtual->atracao;
-            while (atracaoAtual->prox != cidadeAtual->atracao) {
-                atracaoAtual = atracaoAtual->prox;
-            }
-            atracaoAtual->prox = malloc(sizeof(Atracoes));
-            *atracaoAtual->prox = novaAtracao;
-            atracaoAtual->prox->prox = cidadeAtual->atracao;  // Mantém circularidade
+        novaAtracao.ant = NULL;
+        
+        inserirAtracaoOrdenada(&cidadeAtual->atracao, novaAtracao);
         }
     }
 
     fclose(arquivo);
 }
+
+
 void listarCidadesComAtracoes(Cidades *lista) {
     if (lista == NULL) {
         printf("Nenhuma cidade cadastrada.\n");
