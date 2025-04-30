@@ -54,21 +54,6 @@ void inserirAtracaoOrdenada (Atracoes** lista, Atracoes novaAtracao){
     }
 
 }
-/*Função que vincula uma atração a uma cidade específica. Percorre ambas as listas (cidades e atrações), 
-buscando pelos nomes informados. Se ambos forem encontrados, cria um nó de ligação e insere na lista de vínculos (CidadeAtracao).
-Falta finalizar*/
-void linkarAtracaoCidade (Cidades listaCidades, Atracoes listaAtracoes, const char* nomeCidade, const char* nomeAtracao, CidadeAtracao** listaLink){
-
-    Cidades* cidadeAtual = listaCidades;
-    Atracoes* atracaoAtual = listaAtracoes; 
-
-    while (cidadeAtual != NULL && strcmp(cidadeAtual->cidade, nomeCidade) != 0){
-        cidadeAtual = cidadeAtual->prox;
-    }
-
-    Atracoes* inicio = atracaoAtual;
-
-}
 
 
 // funções que personalizam a experiencia do usuario
