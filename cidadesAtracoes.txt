@@ -4,7 +4,7 @@ Belém;Bar Point do Açaí;2;Espaço com música ao vivo e pratos à base de aç
 Belém;Estação das Docas (eventos);1;Shows e feiras culturais na área portuária revitalizada.;19:00 - 00:00
 Belém;Pissolati Café;3;Café acolhedor e sofisticado, perfeito para relaxar e apreciar bebidas artesanais e doces.;08:00 - 20:00
 Goiânia;Parque Flamboyant;0;Jardins, lago e pista de caminhada.;06:00 - 20:00
-Goiânia;Centro CULTURAL Oscar Niemeyer;1;Centro de exposições e apresentações culturais.;10:00 - 18:00
+Goiânia;Centro cultural Oscar Niemeyer;1;Centro de exposições e apresentações culturais.;10:00 - 18:00
 Goiânia;Bolshoi Pub;2;Bar temático com música ao vivo e drinks artesanais.;19:00 - 02:00
 Goiânia;Café Flor do Cerrado;3;Ambiente calmo com menu de cafés especiais.;08:00 - 20:00
 Porto Alegre;Parque Farroupilha (Redenção);0;Largo histórico com pista de caminhada e feiras.;05:00 - 22:00
