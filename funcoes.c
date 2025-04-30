@@ -244,4 +244,45 @@ Cidades* buscarCidade(Cidades* lista, char nome[]) {
     return NULL;
 }
 
+//função para ordenar atrações por pontuação
+void ordenarAtracoesPontuacao(Atracoes **lista){
+    if(*lista==NULL || (*lista)->prox==*lista){
+        return;
+    }
+Atracoes *listaOrdenada = NULL;
+Atracoes *atual = *lista;
+Atracoes *inicio = *lista;
 
+do{
+    Atracoes *proximo = atual->prox;
+
+    atual->prox = atual;
+    atual->ant = atual;
+
+if (listaOrdenada == NULL) {
+    listaOrdenada = atual;
+} 
+else {
+    Atracoes *temp = listaOrdenada;
+    do { 
+        if(atual->pontuacao>temp->pontuacao){
+            break;
+        }
+        temp = temp->prox;
+    }while(temp != listaOrdenada);
+
+    atual->prox = temp;
+    atual->ant = temp->ant;
+    temp->ant->prox = atual;
+    temp->ant = atual;
+
+    if (temp == listaOrdenada && atual->pontuacao > temp->pontuacao) {
+                listaOrdenada = atual;
+    }
+}
+    atual = proximo;
+}while(atual!=inicio);
+*lista = listaOrdenada;
+}
+    
+    
