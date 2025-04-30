@@ -41,5 +41,8 @@ void listarCidadesComAtracoes(Cidades *lista);
 // funções que personalizam a experiencia do usuario
 void aplicarQuestionario(int *natureza, int *cultural, int *festivo, int *relaxante);
 void aplicarPontuacaoNasAtracoes(Atracoes *lista, int natureza, int cultural, int festivo, int relaxante);
+Cidades* criaListaVazia();
+void inserirnoInicioCidade(Cidades **lista, Cidades novaCidade);
+void inserirAtracaoOrdenada(Atracoes **lista, Atracoes novaAtracao);
 
 #endif
