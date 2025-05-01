@@ -32,7 +32,7 @@ void inserirnoInicioCidade (Cidades** lista, Cidades novaCidade){
 /*Alterar depois para inserir as atrações de forma ordenada para manter organização
 Basicamente a mesma estrutura do anterior, nsere uma nova atração ao final da 
 lista circular duplamente encadeada. Caso a lista esteja vazia, a nova atração aponta para si mesma nos campos prox e ant*/
-void inserirAtracao(Atracoes** lista, Atracoes novaAtracao){
+void inserirAtracao(Descritor** d, Atracoes novaAtracao){
     Atracoes* nova = (Atracoes*)malloc(sizeof(Atracoes));
     if (nova == NULL){
         printf ("Erro na alocação de memória da Atração!\n");
@@ -44,12 +44,15 @@ void inserirAtracao(Atracoes** lista, Atracoes novaAtracao){
     if(*lista == NULL) {
         nova->prox = nova;
         nova->ant = nova; 
+        (*d)->cauda = nova;
+        quantidade++;
     }
     else {
-        nova->ant = (*lista)->ant;
-        nova->prox = *lista;
-        (*lista)->ant->prox = nova;
-        (*lista)->ant = nova;
+        nova->ant = (*d)->cauda;
+        nova->prox = (*d)->cauda->prox;
+        (*d)->cauda->prox = nova;
+        (*d)->ant = nova;
+        quantidade++;
         
     }
 
@@ -284,5 +287,59 @@ else {
 }while(atual!=inicio);
 *lista = listaOrdenada;
 }
+
+void removerCidade(Cidades **lista, char nome[]){
+    Cidades* remove = buscarCidade(*lista, nome[]);
+    Cidades* aux = lista;
+
+    if(remove->ant==NULL && remove->prox==NULL){
+        *lista = NULL;
+    }
+    else if(remove->prox==NULL){
+        remove->ant->prox=NULL;
+    }
+    else if(remove->ant==NULL){
+        *lista = remove->prox;
+        remove->prox->ant = NULL;
+    }
+    else{
+        remove->prox->ant = remove->ant;
+        remove->ant->prox = remove->prox;
+    }
+free(remove);
+printf ("Cidade Removida\n");
+}
+
+void removerAtracao(Descritor **d, char nome[]){
+    if(*d == NULL || (*d)->cauda == NULL){
+        printf("Lista de atrações.\n");
+        return;
+    }
+
+    Atracoes *inicio = (*d)->cauda->prox;
+    Atracoes *atual = inicio;
+
+    do {
+        if(strcmp(atual->atracao, nome)==0{
+            if(atual->prox == atual){
+                free(atual);
+                (*d)->cauda = NULL
+            }else {
+                atual->ant->prox = atual->prox;
+                atual->prox->ant = atual->ant;
+                if (atual == (*d)->cauda)
+                (*d)->cauda = atual->ant;
+                free(atual);
+            }
+            (*d)->quantidade--;
+            printf("Atração removida com sucesso.\n");
+            return;
+        }
+        atual = atual->prox;
+    } while (atual != inicio);
+
+    printf ("Atração não localizada.\n");
+}
+
     
     
