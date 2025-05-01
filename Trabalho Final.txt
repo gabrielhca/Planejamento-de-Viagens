@@ -37,7 +37,6 @@ Funcionalidades extras: Duração da estadia, ranking das atrações, ordem pref
 
 lista de funcoes para fazer
 removerCidade
-listarCidades
 listarAtracoes
 removerAtracao
 liberarAtracoes -- libera a memoria armazenada para atracoes
