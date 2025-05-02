@@ -49,7 +49,7 @@ Cidades* criaListaVazia();
 void inserirnoInicioCidade(Cidades **lista, Cidades novaCidade);
 
 // Insere nova atração no final da lista circular de atrações
-void inserirAtracao(Descritor **d, Atracoes novaAtracao);
+void inserirAtracao(Descritor *d, Atracoes novaAtracao);
 
 // Carrega cidades e atrações a partir de arquivo texto
 void carregarDados(Cidades **listaCidades);
@@ -79,7 +79,7 @@ void ordenarAtracoesPontuacao(Atracoes **lista);
 void removerCidade(Cidades **lista, const char nome[]);
 
 // Remove atração da lista circular de atrações
-void removerAtracao(Descritor **d, const char nome[]);
+void removerAtracao(Descritor *d, const char nome[]);
 
 //Imprime as atrações personalizadas para a viagem
 void imprimeRoteiroPersonalizado(Cidades *lista, Viagem *listaViagem);
