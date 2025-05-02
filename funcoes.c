@@ -41,20 +41,20 @@ void inserirAtracao(Descritor** d, Atracoes novaAtracao){
 
     *nova = novaAtracao;
 
-    if(*lista == NULL) {
+    if((*d)->cauda == NULL) {
         nova->prox = nova;
         nova->ant = nova; 
         (*d)->cauda = nova;
-        quantidade++;
     }
     else {
         nova->ant = (*d)->cauda;
         nova->prox = (*d)->cauda->prox;
+        (*d)->cauda->prox->ant = nova;
         (*d)->cauda->prox = nova;
-        (*d)->ant = nova;
-        quantidade++;
+        (*d)->cauda = nova;
         
     }
+    (*d)->quantidade++;
 
 }
 
@@ -189,7 +189,7 @@ void listarCidades(Cidades *lista){
         cidadeAtual = cidadeAtual->prox;
         printf("\n");
     }
-
+}
 
 void listarCidadesComAtracoes(Cidades *lista) {
     if (lista == NULL) {
@@ -289,9 +289,11 @@ else {
 }
 
 void removerCidade(Cidades **lista, char nome[]){
-    Cidades* remove = buscarCidade(*lista, nome[]);
-    Cidades* aux = lista;
-
+    Cidades* remove = buscarCidade(*lista, nome);
+    if(remove == NULL){
+        return;
+    }
+    
     if(remove->ant==NULL && remove->prox==NULL){
         *lista = NULL;
     }
@@ -328,9 +330,10 @@ void removerAtracao(Descritor **d, char nome[]){
                 atual->ant->prox = atual->prox;
                 atual->prox->ant = atual->ant;
                 if (atual == (*d)->cauda)
-                (*d)->cauda = atual->ant;
-                free(atual);
+                    (*d)->cauda = atual->ant;
             }
+                free(atual);    
+        }
             (*d)->quantidade--;
             printf("Atração removida com sucesso.\n");
             return;
