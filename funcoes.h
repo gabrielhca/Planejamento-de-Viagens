@@ -1,6 +1,10 @@
 #ifndef _FUNCOES_H
 #define _FUNCOES_H
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
 // Tipos de dados
 
 typedef enum { NATUREZA, CULTURAL, FESTIVO, RELAXANTE } Tag;
@@ -11,15 +15,21 @@ typedef struct atracoes {
     Tag categoria;
     char descricao[100];
     char descricaoHorario[50];
-    int pontuacao;        // pontuação acumulada
+    int pontuacao;              // pontuação acumulada
     struct atracoes *prox;
     struct atracoes *ant;
 } Atracoes;
 
+// Controlador da lista de atrações (descritor)
+typedef struct descritor {
+    Atracoes *cauda;
+    int quantidade;
+} Descritor;
+
 // Lista duplamente encadeada de cidades
 typedef struct cidades {
     char cidade[30];
-    Atracoes *atracao;    // lista circular de atrações
+    Descritor *atracao;         // descritor da lista circular de atrações
     struct cidades *prox;
     struct cidades *ant;
 } Cidades;
@@ -30,13 +40,16 @@ typedef struct viagem {
     int duracaoEstadia;
 } Viagem;
 
-// Controlador da lista de atrações (opcional)
-typedef struct descritor {
-    Atracoes *cauda;
-    int quantidade;
-} Descritor;
-
 // Protótipos de funções
+
+// Cria lista vazia de cidades
+Cidades* criaListaVazia();
+
+// Insere nova cidade no início da lista de cidades
+void inserirnoInicioCidade(Cidades **lista, Cidades novaCidade);
+
+// Insere nova atração no final da lista circular de atrações
+void inserirAtracao(Descritor **d, Atracoes novaAtracao);
 
 // Carrega cidades e atrações a partir de arquivo texto
 void carregarDados(Cidades **listaCidades);
@@ -47,26 +60,25 @@ void listarCidades(Cidades *lista);
 // Impressão das cidades e suas atrações
 void listarCidadesComAtracoes(Cidades *lista);
 
-// Questionário para determinar perfis de pontuação
-void aplicarQuestionario(int *natureza, int *cultural, int *festivo, int *relaxante);
-
-// Aplica pontuações às atrações conforme as respostas
-void aplicarPontuacaoNasAtracoes(Atracoes *lista, int natureza, int cultural, int festivo, int relaxante);
-
-// Cria lista vazia de cidades
-Cidades* criaListaVazia();
-
-// Insere nova cidade no início da lista de cidades
-void inserirnoInicioCidade(Cidades **lista, Cidades novaCidade);
-
-// Insere nova atração no final da lista circular de atrações
-void inserirAtracao(Atracoes **lista, Atracoes novaAtracao);
-
 // Busca cidade pelo nome
 Cidades* buscarCidade(Cidades *lista, const char *nome);
 
 // Define cidade e duração da viagem
 void definirViagem(Viagem *viagem, Cidades *cidade, int dias);
 
-// Ordena atrações por pontuação (descendente), alterando a lista
+// Aplica questionário de perfil para definir pontuações
+void aplicarQuestionario(int *natureza, int *cultural, int *festivo, int *relaxante);
+
+// Aplica pontuações às atrações conforme as respostas
+void aplicarPontuacaoNasAtracoes(Atracoes *lista, int natureza, int cultural, int festivo, int relaxante);
+
+// Ordena atrações por pontuação (descendente)
 void ordenarAtracoesPorPontuacao(Atracoes **lista);
+
+// Remove cidade da lista de cidades
+void removerCidade(Cidades **lista, const char nome[]);
+
+// Remove atração da lista circular de atrações
+void removerAtracao(Descritor **d, const char nome[]);
+
+#endif 
