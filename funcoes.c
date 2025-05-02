@@ -109,27 +109,28 @@ void aplicarQuestionario(int *natureza, int *cultural, int *festivo, int *relaxa
     } while (resposta != 1 && resposta != 2);
 }
 
-void aplicarPontuacaoNasAtracoes(Atracoes *lista, int natureza, int cultural, int festivo, int relaxante) {
-    if (lista == NULL) return;
+void aplicarPontuacaoNasAtracoes(Descritor *d, int natureza, int cultural, int festivo, int relaxante) {
+    if (d->cauda == NULL) return;
 
-    Atracoes *inicio = lista;
+    Atracoes *inicio = d->cauda->prox;
+    Atracoes *aux = inicio;
     do {
-        switch (lista->categoria) {
+        switch (aux->categoria) {
             case NATUREZA:
-                lista->pontuacao += natureza;
+                aux->pontuacao += natureza;
                 break;
             case CULTURAL:
-                lista->pontuacao += cultural;
+                aux->pontuacao += cultural;
                 break;
             case FESTIVO:
-                lista->pontuacao += festivo;
+                aux->pontuacao += festivo;
                 break;
             case RELAXANTE:
-                lista->pontuacao += relaxante;
+                aux->pontuacao += relaxante;
                 break;
         }
-        lista = lista->prox;
-    } while (lista != inicio);
+        aux = aux->prox;
+    } while (aux != inicio);
 }
 
 void carregarDados(Cidades **listaCidades) {
@@ -250,44 +251,37 @@ Cidades* buscarCidade(Cidades* lista, char nome[]) {
 }
 
 //função para ordenar atrações por pontuação
-void ordenarAtracoesPontuacao(Atracoes **lista){
-    if(*lista==NULL || (*lista)->prox==*lista){
+void ordenarAtracoesPontuacao(Descritor *d) {
+    if (d == NULL || d->cauda == NULL) {
         return;
     }
-Atracoes *listaOrdenada = NULL;
-Atracoes *atual = *lista;
-Atracoes *inicio = *lista;
 
-do{
-    Atracoes *proximo = atual->prox;
+    Atracoes *inicio = d->cauda->prox;
+    Atracoes *atual = inicio;
 
-    atual->prox = atual;
-    atual->ant = atual;
+    do {
+        Atracoes *proximo = atual->prox;
+        do {
+            if (proximo->pontuacao > atual->pontuacao) {
+                // Troca os dados (NÃO troca os ponteiros)
+                char tempNome[100];
+                strcpy(tempNome, atual->atracao);
+                strcpy(atual->atracao, proximo->atracao);
+                strcpy(proximo->atracao, tempNome);
 
-if (listaOrdenada == NULL) {
-    listaOrdenada = atual;
-} 
-else {
-    Atracoes *temp = listaOrdenada;
-    do { 
-        if(atual->pontuacao>temp->pontuacao){
-            break;
-        }
-        temp = temp->prox;
-    }while(temp != listaOrdenada);
+                int tempCategoria = atual->categoria;
+                atual->categoria = proximo->categoria;
+                proximo->categoria = tempCategoria;
 
-    atual->prox = temp;
-    atual->ant = temp->ant;
-    temp->ant->prox = atual;
-    temp->ant = atual;
+                int tempPontuacao = atual->pontuacao;
+                atual->pontuacao = proximo->pontuacao;
+                proximo->pontuacao = tempPontuacao;
+            }
+            proximo = proximo->prox;
+        } while (proximo != inicio);
 
-    if (temp == listaOrdenada && atual->pontuacao > temp->pontuacao) {
-                listaOrdenada = atual;
-    }
-}
-    atual = proximo;
-}while(atual!=inicio);
-*lista = listaOrdenada;
+        atual = atual->prox;
+    } while (atual != inicio);
 }
 
 void removerCidade(Cidades **lista, char nome[]){
@@ -347,69 +341,64 @@ void removerAtracao(Descritor *d, const char *nome) {
     printf("Atração \"%s\" não localizada.\n", nome);
 }
 
-
-
-void imprimeRoteiroPersonalizado(Cidades *lista, Viagem *listaViagem){
-    if(listaViagem == NULL){
+void imprimeRoteiroPersonalizado(Cidades *lista, Viagem *viagemProgramada) {
+    if (viagemProgramada == NULL) {
         printf("Nenhuma viagem cadastrada.\n");
         return;
     }
 
-Viagem *viagemProgramada = listaViagem;
-while(viagemProgramada != NULL){
-    printf("ROTEIRO PARA VIAGEM À: %s.\nDURAÇÃO: %d dias.\n", viagemProgramada->cidade, viagemProgramada->dias);
+    // Cabeçalho da viagem
+    printf("ROTEIRO PARA VIAGEM À: %s.\n"
+           "DURAÇÃO: %d dias.\n\n",
+           viagemProgramada->cidade->cidade,
+           viagemProgramada->duracaoEstadia);
 
+    // Localiza a cidade no cadastro
     Cidades *cidadeAtual = lista;
-    while(cidadeAtual != NULL){
-        if(strcmp(cidadeAtual->cidade, viagemAtual->cidade)==0){
+    while (cidadeAtual != NULL) {
+        if (strcmp(cidadeAtual->cidade,
+                   viagemProgramada->cidade->cidade) == 0) {
             break;
         }
         cidadeAtual = cidadeAtual->prox;
     }
-    
-    if(cidadeAtual == NULL){
-        printf("Cidade não encontrada no cadastro.\n");
+    if (cidadeAtual == NULL) {
+        printf("Cidade %s não encontrada no cadastro.\n\n",
+               viagemProgramada->cidade->cidade);
         return;
     }
 
-    if(cidadeAtual->atracao == NULL){
-        printf("Nenhuma atração cadastrada para essa cidade.\n");
+    // Acessa o descritor de atrações
+    Descritor *d = cidadeAtual->atracao;
+    if (d == NULL || d->cauda == NULL) {
+        printf("Nenhuma atração cadastrada para %s.\n\n",
+               cidadeAtual->cidade);
         return;
     }
 
-    int totalAtracoes = 0;
-    Atracoes *atracaoAtual = cidadeAtual->atracao;
-    Atracoes *primeira = atracaoAtual;
+    // Prepara contagem e ponteiros
+    int totalAtracoes     = d->quantidade;
+    int atracoesRestantes = totalAtracoes;
+    int dias              = viagemProgramada->duracaoEstadia;
+    int porDia            = totalAtracoes / dias;
+    if (porDia == 0) porDia = 1;
 
-    do {
-        totalAtracoes++;
-        atracaoAtual = atracaoAtual->prox;
-    } while (atracaoAtual != primeira);
+    Atracoes *atracaoAtual = d->cauda->prox;
 
-    int atracaoPorDia = totalAtracoes/viagem->dias;
-
-    if(atracoesPorDia == 0){
-        atracoesPorDia = 1;
-    }
-
-    atracaoAtual = cidadeAtual->atracao;
-    
-    for(int dia = 1; dia<=viagemProgramada->dias; dia++){
+    // Imprime roteiro dia a dia
+    for (int dia = 1; dia <= dias && atracoesRestantes > 0; dia++) {
         printf("Dia %d:\n", dia);
-        
-        for(int i = 0; i<atracoesPorDia && totalAtracoes>0; i++){
-            printf(" - %s - %s \n", atracaoAtual->atracao,
-                atracaoAtual->categoria == NATUREZA ? "Natureza" :
-                atracaoAtual->categoria == CULTURAL ? "Cultural" :
-                atracaoAtual->categoria == FESTIVO ? "Festivo" :
-                atracaoAtual->categoria == RELAXANTE ? "Relaxante" : "Desconhecido"
-            );
+        for (int i = 0; i < porDia && atracoesRestantes > 0; i++) {
+            printf(" - %s (%s)\n",
+                   atracaoAtual->atracao,
+                   atracaoAtual->categoria == NATUREZA   ? "Natureza" :
+                   atracaoAtual->categoria == CULTURAL   ? "Cultural" :
+                   atracaoAtual->categoria == FESTIVO    ? "Festivo"  :
+                                                           "Relaxante");
             atracaoAtual = atracaoAtual->prox;
-            totalAtracoes--;
+            atracoesRestantes--;
         }
-    printf ("\n");
-    if(atracoesRestantes == 0){
-        break;
+        printf("\n");
     }
 }
     
