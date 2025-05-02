@@ -32,7 +32,7 @@ void inserirnoInicioCidade (Cidades** lista, Cidades novaCidade){
 /*Alterar depois para inserir as atrações de forma ordenada para manter organização
 Basicamente a mesma estrutura do anterior, nsere uma nova atração ao final da 
 lista circular duplamente encadeada. Caso a lista esteja vazia, a nova atração aponta para si mesma nos campos prox e ant*/
-void inserirAtracao(Descritor** d, Atracoes novaAtracao){
+void inserirAtracao(Atracoes **lista, Atracoes novaAtracao){
     Atracoes* nova = (Atracoes*)malloc(sizeof(Atracoes));
     if (nova == NULL){
         printf ("Erro na alocação de memória da Atração!\n");
@@ -41,21 +41,17 @@ void inserirAtracao(Descritor** d, Atracoes novaAtracao){
 
     *nova = novaAtracao;
 
-    if((*d)->cauda == NULL) {
+    if(*lista == NULL) {
         nova->prox = nova;
         nova->ant = nova; 
-        (*d)->cauda = nova;
+        *lista = nova;
     }
     else {
-        nova->ant = (*d)->cauda;
-        nova->prox = (*d)->cauda->prox;
-        (*d)->cauda->prox->ant = nova;
-        (*d)->cauda->prox = nova;
-        (*d)->cauda = nova;
-        
+        nova->ant = ultimo;
+        nova->prox = *lista;
+        ultimo->prox = nova;
+        (*lista)->ant = nova;        
     }
-    (*d)->quantidade++;
-
 }
 
 
@@ -344,5 +340,23 @@ void removerAtracao(Descritor **d, char nome[]){
     printf ("Atração não localizada.\n");
 }
 
+
+void imprimeRoteiroPersonalizado(Cidades *lista, Viagem *listaViagem){
+    if(listaViagem == NULL){
+        printf("Nenhuma viagem cadastrada.\n");
+        return;
+    }
+
+Viagem *viagemProgramada = listaViagem;
+while(viagemProgramada != NULL){
+    printf("ROTEIRO PARA VIAGEM À: %S.\nDURAÇÃO: %d dias.\n", viagemProgramada->cidade, viagemProgramada->dias);
+
+    Cidades *cidadeAtual = lista;
+    while(cidadeAtual != NULL){
+        if(strcmp(cidadeAtual->cidade, viagemAtual->cidade)==0){
+            break;
+        }
+        cidadeAtual = cidadeAtual->prox;
+    }
     
-    
+
