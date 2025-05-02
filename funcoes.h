@@ -81,4 +81,7 @@ void removerCidade(Cidades **lista, const char nome[]);
 // Remove atração da lista circular de atrações
 void removerAtracao(Descritor **d, const char nome[]);
 
+//Imprime as atrações personalizadas para a viagem
+void imprimeRoteiroPersonalizado(Cidades *lista, Viagem *listaViagem);
+
 #endif 
