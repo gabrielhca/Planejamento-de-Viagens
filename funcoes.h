@@ -70,10 +70,10 @@ void definirViagem(Viagem *viagem, Cidades *cidade, int dias);
 void aplicarQuestionario(int *natureza, int *cultural, int *festivo, int *relaxante);
 
 // Aplica pontuações às atrações conforme as respostas
-void aplicarPontuacaoNasAtracoes(Atracoes *lista, int natureza, int cultural, int festivo, int relaxante);
+void aplicarPontuacaoNasAtracoes(Descritor *d, int natureza, int cultural, int festivo, int relaxante);
 
 // Ordena atrações por pontuação (descendente)
-void ordenarAtracoesPontuacao(Atracoes **lista);
+void ordenarAtracoesPontuacao(Descritor *d);
 
 // Remove cidade da lista de cidades
 void removerCidade(Cidades **lista, const char nome[]);
