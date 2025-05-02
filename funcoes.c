@@ -32,27 +32,33 @@ void inserirnoInicioCidade (Cidades** lista, Cidades novaCidade){
 /*Alterar depois para inserir as atrações de forma ordenada para manter organização
 Basicamente a mesma estrutura do anterior, nsere uma nova atração ao final da 
 lista circular duplamente encadeada. Caso a lista esteja vazia, a nova atração aponta para si mesma nos campos prox e ant*/
-void inserirAtracao(Atracoes **lista, Atracoes novaAtracao){
-    Atracoes* nova = (Atracoes*)malloc(sizeof(Atracoes));
-    if (nova == NULL){
-        printf ("Erro na alocação de memória da Atração!\n");
+void inserirAtracao(Descritor *d, Atracoes novaAtracao){
+    Atracoes *nova = malloc(sizeof(Atracoes));
+    if (!nova){
+        printf("Erro na alocação de memória da Atração!\n");
         return;
     }
 
     *nova = novaAtracao;
+    nova->prox = nova->ant = NULL;
 
-    if(*lista == NULL) {
-        nova->prox = nova;
-        nova->ant = nova; 
-        *lista = nova;
+    if (d->cauda == NULL) {
+        // Lista vazia: nova aponta para si mesma
+        nova->prox = nova->ant = nova;
+        d->cauda = nova;
+    } else {
+        // Insere após a cauda atual (fim da lista circular)
+        Atracoes *primeiro = d->cauda->prox;
+        nova->prox          = primeiro;
+        nova->ant           = d->cauda;
+        d->cauda->prox      = nova;
+        primeiro->ant       = nova;
+        d->cauda            = nova;       // nova vira a nova cauda
     }
-    else {
-        nova->ant = (*lista)->ant;
-        nova->prox = *lista;
-        (*lista)->ant->prox = nova;  
-        (*lista)->ant = nova;        
-    }
+
+    d->quantidade++;  // incrementa o total
 }
+
 
 
 // funções que personalizam a experiencia do usuario
@@ -308,37 +314,39 @@ free(remove);
 printf ("Cidade Removida\n");
 }
 
-void removerAtracao(Descritor **d, char nome[]){
-    if(*d == NULL || (*d)->cauda == NULL){
-        printf("Lista de atrações.\n");
+void removerAtracao(Descritor *d, const char *nome) {
+    if (d == NULL || d->cauda == NULL) {
+        printf("Lista de atrações vazia.\n");
         return;
     }
 
-    Atracoes *inicio = (*d)->cauda->prox;
+    Atracoes *inicio = d->cauda->prox;
     Atracoes *atual = inicio;
 
     do {
-        if(strcmp(atual->atracao, nome)==0{
-            if(atual->prox == atual){
+        if (strcmp(atual->atracao, nome) == 0) {
+            // Se for o único nó
+            if (atual->prox == atual) {
                 free(atual);
-                (*d)->cauda = NULL
-            }else {
+                d->cauda = NULL;
+            } else {
                 atual->ant->prox = atual->prox;
                 atual->prox->ant = atual->ant;
-                if (atual == (*d)->cauda)
-                    (*d)->cauda = atual->ant;
+                if (atual == d->cauda) {
+                    d->cauda = atual->ant;
+                }
+                free(atual);
             }
-                free(atual);    
-        }
-            (*d)->quantidade--;
-            printf("Atração removida com sucesso.\n");
+            d->quantidade--;
+            printf("Atração \"%s\" removida com sucesso.\n", nome);
             return;
         }
         atual = atual->prox;
     } while (atual != inicio);
 
-    printf ("Atração não localizada.\n");
+    printf("Atração \"%s\" não localizada.\n", nome);
 }
+
 
 
 void imprimeRoteiroPersonalizado(Cidades *lista, Viagem *listaViagem){
