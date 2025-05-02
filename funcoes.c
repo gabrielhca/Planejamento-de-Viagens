@@ -349,7 +349,7 @@ void imprimeRoteiroPersonalizado(Cidades *lista, Viagem *listaViagem){
 
 Viagem *viagemProgramada = listaViagem;
 while(viagemProgramada != NULL){
-    printf("ROTEIRO PARA VIAGEM À: %S.\nDURAÇÃO: %d dias.\n", viagemProgramada->cidade, viagemProgramada->dias);
+    printf("ROTEIRO PARA VIAGEM À: %s.\nDURAÇÃO: %d dias.\n", viagemProgramada->cidade, viagemProgramada->dias);
 
     Cidades *cidadeAtual = lista;
     while(cidadeAtual != NULL){
@@ -359,4 +359,49 @@ while(viagemProgramada != NULL){
         cidadeAtual = cidadeAtual->prox;
     }
     
+    if(cidadeAtual == NULL){
+        printf("Cidade não encontrada no cadastro.\n");
+        return;
+    }
 
+    if(cidadeAtual->atracao == NULL){
+        printf("Nenhuma atração cadastrada para essa cidade.\n");
+        return;
+    }
+
+    int totalAtracoes = 0;
+    Atracoes *atracaoAtual = cidadeAtual->atracao;
+    Atracoes *primeira = atracaoAtual;
+
+    do {
+        totalAtracoes++;
+        atracaoAtual = atracaoAtual->prox;
+    } while (atracaoAtual != primeira);
+
+    int atracaoPorDia = totalAtracoes/viagem->dias;
+
+    if(atracoesPorDia == 0){
+        atracoesPorDia = 1;
+    }
+
+    atracaoAtual = cidadeAtual->atracao;
+    
+    for(int dia = 1; dia<=viagemProgramada->dias; dia++){
+        printf("Dia %d:\n", dia);
+        
+        for(int i = 0; i<atracoesPorDia && totalAtracoes>0; i++){
+            printf(" - %s - %s \n", atracaoAtual->atracao,
+                atracaoAtual->categoria == NATUREZA ? "Natureza" :
+                atracaoAtual->categoria == CULTURAL ? "Cultural" :
+                atracaoAtual->categoria == FESTIVO ? "Festivo" :
+                atracaoAtual->categoria == RELAXANTE ? "Relaxante" : "Desconhecido"
+            );
+            atracaoAtual = atracaoAtual->prox;
+            totalAtracoes--;
+        }
+    printf ("\n");
+    if(atracoesRestantes == 0){
+        break;
+    }
+}
+    
