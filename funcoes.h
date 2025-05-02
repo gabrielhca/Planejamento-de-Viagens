@@ -73,7 +73,7 @@ void aplicarQuestionario(int *natureza, int *cultural, int *festivo, int *relaxa
 void aplicarPontuacaoNasAtracoes(Atracoes *lista, int natureza, int cultural, int festivo, int relaxante);
 
 // Ordena atrações por pontuação (descendente)
-void ordenarAtracoesPorPontuacao(Atracoes **lista);
+void ordenarAtracoesPontuacao(Atracoes **lista);
 
 // Remove cidade da lista de cidades
 void removerCidade(Cidades **lista, const char nome[]);
