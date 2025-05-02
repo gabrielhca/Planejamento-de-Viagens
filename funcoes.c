@@ -133,7 +133,8 @@ void aplicarPontuacaoNasAtracoes(Descritor *d, int natureza, int cultural, int f
     } while (aux != inicio);
 }
 
-/*Função feita para carregar os dados fornecidos pelo arquivo txt. Ele utiliza as funções de inserir atração e inserir cidade para montar a lista. */
+/*Função que carrega os dados do arquivo 'cidadesAtracoes.txt', no formato: NomeCidade;NomeAtracao;Categoria;Descricao;Horario. 
+A função insere cidades e atrações na estrutura de dados conforme lidas. */
 void carregarDados(Cidades **listaCidades) {
     FILE *arquivo = fopen("cidadesAtracoes.txt", "r");
     if (arquivo == NULL) {
