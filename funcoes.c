@@ -47,9 +47,9 @@ void inserirAtracao(Atracoes **lista, Atracoes novaAtracao){
         *lista = nova;
     }
     else {
-        nova->ant = ultimo;
+        nova->ant = (*lista)->ant;
         nova->prox = *lista;
-        ultimo->prox = nova;
+        (*lista)->ant->prox = nova;  
         (*lista)->ant = nova;        
     }
 }
