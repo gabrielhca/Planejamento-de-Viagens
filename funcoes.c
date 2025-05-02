@@ -107,7 +107,8 @@ void aplicarQuestionario(int *natureza, int *cultural, int *festivo, int *relaxa
         else printf("Resposta incorreta. Tente novamente.\n");
     } while (resposta != 1 && resposta != 2);
 }
-/*A função recebe como parametro o descritor que está associado à lista de atrações e os dados do questionário. */
+/*A função recebe como parametro o descritor que está associado à lista de atrações e os dados do questionário. A função aplica a pontuação nas atrações que
+estão distribuidas de acordo com as categorias definidas. Dessa forma conseguimos priorizar qual atração será feita em que ordem.*/
 void aplicarPontuacaoNasAtracoes(Descritor *d, int natureza, int cultural, int festivo, int relaxante) {
     if (d->cauda == NULL) return;
 
@@ -132,6 +133,7 @@ void aplicarPontuacaoNasAtracoes(Descritor *d, int natureza, int cultural, int f
     } while (aux != inicio);
 }
 
+/*Função feita para carregar os dados fornecidos pelo arquivo txt. Ele utiliza as funções de inserir atração e inserir cidade para montar a lista. */
 void carregarDados(Cidades **listaCidades) {
     FILE *arquivo = fopen("cidadesAtracoes.txt", "r");
     if (arquivo == NULL) {
@@ -179,6 +181,7 @@ void carregarDados(Cidades **listaCidades) {
     fclose(arquivo);
 }
 
+/*Função feita para imprimir todas as cidades cadastradas, sem as atrações*/
 void listarCidades(Cidades *lista){
     if(lista == NULL){
         printf ("Nenhuma cidade cadastrada.\n");
@@ -193,6 +196,7 @@ void listarCidades(Cidades *lista){
     }
 }
 
+/*Função feita para imprimir todas as cidades COM as atrações.*/
 void listarCidadesComAtracoes(Cidades *lista) {
     if (lista == NULL) {
         printf("Nenhuma cidade cadastrada.\n");
@@ -224,8 +228,7 @@ void listarCidadesComAtracoes(Cidades *lista) {
     }
 }
 
-//Função para definir a viagem e a estadia. Precisa linkar com as funções de aplicação do questionário e com as funções de ordenação das atrações de acordo com
-//a pontuação definida
+//Função para definir a viagem e a estadia. 
 void definirViagem(Viagem* viagem, Cidades* cidade, int dias) {
     viagem->cidade = cidade;
     viagem->duracaoEstadia = dias;
@@ -234,7 +237,7 @@ void definirViagem(Viagem* viagem, Cidades* cidade, int dias) {
 }
 
 
-//Função para encontrar para qual cidade a pessoa irá viajar. 
+//Função para buscar para qual cidade a pessoa irá viajar. Verifica se a cidade existe na lista, se sim, retorna a cidade) 
 Cidades* buscarCidade(Cidades* lista, char nome[]) {
     Cidades* atual = lista;
 
@@ -249,7 +252,8 @@ Cidades* buscarCidade(Cidades* lista, char nome[]) {
     return NULL;
 }
 
-//função para ordenar atrações por pontuação
+/*Função que ordena as atrações por pontuação. A ordenação é feita trocando os dados da cidade com maior pontuação pela de menor pontuação, se esta estiver
+numa posição superior à ela. */
 void ordenarAtracoesPontuacao(Descritor *d) {
     if (d == NULL || d->cauda == NULL) {
         return;
@@ -283,6 +287,8 @@ void ordenarAtracoesPontuacao(Descritor *d) {
     } while (atual != inicio);
 }
 
+/*Função de remover cidade, utiliza como parametro lista do tipo Cidades e nome, para que possamos buscar a cidade. reaproveitamos a função de buscarCidade
+para poder localizar e retornar a cidade que queremos remover.*/
 void removerCidade(Cidades **lista, char nome[]){
     Cidades* remove = buscarCidade(*lista, nome);
     if(remove == NULL){
@@ -307,6 +313,9 @@ free(remove);
 printf ("Cidade Removida\n");
 }
 
+/*Função de remover atração. Utilizamos o descritor criado e nome para poder buscar a atração que desejamos fazer a remoção. É feito o processo de remoção
+de acordo com a localidade da atração. Se a atração estiver no inicio da lista, reajustamos o ponteiro da cauda e do segundo item(novo primeiro), se estiver
+no final, reajustamos ponteiro do penultimo elemento (novo ultimo) e do primeiro elemento. */
 void removerAtracao(Descritor *d, const char *nome) {
     if (d == NULL || d->cauda == NULL) {
         printf("Lista de atrações vazia.\n");
@@ -340,6 +349,10 @@ void removerAtracao(Descritor *d, const char *nome) {
     printf("Atração \"%s\" não localizada.\n", nome);
 }
 
+/*Após a realização do questionário e da organização das atrações de acordo com a pontuação, é feita a impressão do roteiro de acordo com as preferencias do
+viajante. Verificamos a quantidade de dias que irá durar a estadia do usuário, com isso conseguimos dividir as atrações pela quantidade de dias em que ele
+vai permanecer na cidade. Posteriormente, então, as atrações são atribuidas de acordo com a pontuação do questionário, priorizando as atividades que 
+sejam de maior interesse do usuário.*/
 void imprimeRoteiroPersonalizado(Cidades *lista, Viagem *viagemProgramada) {
     if (viagemProgramada == NULL) {
         printf("Nenhuma viagem cadastrada.\n");
