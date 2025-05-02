@@ -29,9 +29,7 @@ void inserirnoInicioCidade (Cidades** lista, Cidades novaCidade){
     }
     *lista = nova;
 }
-/*Alterar depois para inserir as atrações de forma ordenada para manter organização
-Basicamente a mesma estrutura do anterior, nsere uma nova atração ao final da 
-lista circular duplamente encadeada. Caso a lista esteja vazia, a nova atração aponta para si mesma nos campos prox e ant*/
+/*Função para inserção de atrações. Utiliza o descritor como parametro e a lista de atrações. Faz a inserção no final da lista circular de atraçóes.*/
 void inserirAtracao(Descritor *d, Atracoes novaAtracao){
     Atracoes *nova = malloc(sizeof(Atracoes));
     if (!nova){
@@ -61,7 +59,8 @@ void inserirAtracao(Descritor *d, Atracoes novaAtracao){
 
 
 
-// funções que personalizam a experiencia do usuario
+/* Função que faz a aplicação do questionário para o usuário, onde foi realizada a divisão do tipo de atividade nas categorias de natureza, cultural, 
+festivo e relaxante. As perguntas são feitas de acordo com as categorias e é acumulado a quantidade de pontos por tipo de atração para montar o roteiro.*/
 
 void aplicarQuestionario(int *natureza, int *cultural, int *festivo, int *relaxante) {
     int resposta;
@@ -108,7 +107,7 @@ void aplicarQuestionario(int *natureza, int *cultural, int *festivo, int *relaxa
         else printf("Resposta incorreta. Tente novamente.\n");
     } while (resposta != 1 && resposta != 2);
 }
-
+/*A função recebe como parametro o descritor que está associado à lista de atrações e os dados do questionário. */
 void aplicarPontuacaoNasAtracoes(Descritor *d, int natureza, int cultural, int festivo, int relaxante) {
     if (d->cauda == NULL) return;
 
