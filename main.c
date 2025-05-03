@@ -76,7 +76,7 @@ int main() {
                 do {
                     printf("\n1 - Ver ranking de prioridades\n");
                     printf("2 - Roteiro personalizado\n");
-                    printf("3 - Ver outras cidades\n");
+                    printf("3 - Retornar ao menu anterior\n");
                     printf("Escolha: ");
                     scanf("%d", &opcaoRoteiro);
 
@@ -87,9 +87,7 @@ int main() {
                         case 2:
                             imprimeRoteiroPersonalizado(cidadeAtual, viagemProgramada);
                             break;
-                        case 3:
-                            listarCidades(listaCidades);
-                            
+                        case 3:                            
                             break;
                     }
                 } while (opcaoRoteiro != 3);
