@@ -35,9 +35,4 @@ Funcionalidades extras: Duração da estadia, ranking das atrações, ordem pref
 | festivo   | festas locais, eventos, bares, shows                | cultural         |
 | relaxante | spas, cafés calmos, jardins, praias tranquilas      | aventureiro      |
 
-lista de funcoes para fazer
-removerCidade
-listarAtracoes
-removerAtracao
-liberarAtracoes -- libera a memoria armazenada para atracoes
-liberarCidades --libera a amemoria armazenada para cidades
+
