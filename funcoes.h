@@ -88,4 +88,6 @@ void liberarMemoria(Cidades *listaCidades);
 
 void menuAdministrativo(Cidades **lista);
 
+void mostrarRanking(Descritor *d);
+
 #endif 
