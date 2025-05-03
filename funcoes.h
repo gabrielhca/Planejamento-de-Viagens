@@ -84,4 +84,7 @@ void removerAtracao(Descritor *d, const char nome[]);
 //Imprime as atrações personalizadas para a viagem
 void imprimeRoteiroPersonalizado(Cidades *lista, Viagem *listaViagem);
 
+void liberarMemoria(Cidades *listaCidades);
+
+
 #endif 
