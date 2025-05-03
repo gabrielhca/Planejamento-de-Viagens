@@ -267,9 +267,15 @@ void menuAdministrativo(Cidades **lista) {
     printf("\nDigite a senha de acesso: ");
     scanf("%d", &senha);
     
-    if (senha != 123) {
-        printf("Senha incorreta!\n");
-        return;
+    while(senha != 123){
+        printf("Senha incorreta! Tente novamente ou digite 1 para voltar ao menu principal\n");
+        scanf("%d", &senha);
+        if(senha==123){
+            continue;
+        }
+        else{
+            return;
+        }
     }
 
     int opcao;
