@@ -46,15 +46,20 @@ int main() {
                 
                 printf("Qual a duração da sua estadia em dias?\n");
                 scanf("%d", &duracao);
-                
-                viagemProgramada = definirViagem(nomeCidade, duracao);
+
+                viagemProgramada = (Viagem *)malloc(sizeof(Viagem));
+                if (viagemProgramada == NULL) {
+                    printf("Erro ao alocar memória para a viagem!\n");
+                    break;
+                }
+                viagemProgramada = definirViagem(viagemProgramada, nomeCidade, duracao);
                 
                 // questionario para experiencia personalizada
                 aplicarQuestionario(&natureza, &cultural, &festivo, &relaxante);
                 
                 // aplica pontuação nas atrações de cada cidade
                 Cidades* cidadeAtual = listaCidades;
-                while (cidadeAtual != NULL && strcmp(cidadeAtual->nome, nomeCidade) != 0) {
+                while (cidadeAtual != NULL && strcmp(cidadeAtual->cidade, nomeCidade) != 0) {
                         cidadeAtual = cidadeAtual->prox;
                 }
                 
@@ -74,7 +79,7 @@ int main() {
         }
     }while (opcao != 4);
 
-    void liberarMemoria(listaCidades);
+    liberarMemoria(listaCidades);
 
     return 0;
 }
