@@ -6,12 +6,12 @@
 int main() {
     int natureza = 0, cultural = 0, festivo = 0, relaxante = 0;
     Viagem* viagemProgramada = NULL;
-    Cidades* listaCidades = (Cidades*)malloc(sizeof(Cidades));
+    Cidades* listaCidades = criaListaVazia();
+
     if(listaCidades == NULL){
         printf("Erro ao alocar memória para as cidades!\n");
         return 1;
     }
-    criaListaVazia();
 
     // carrega os dados das cidades e atrações
     carregarDados(&listaCidades);
@@ -30,25 +30,42 @@ int main() {
             case 1:
                 listarCidades(listaCidades);
                 break;
+            
             case 2:
                 listarCidadesComAtracoes(listaCidades);
                 break;
+            
             case 3:
                 char nomeCidade[30];
                 int duracao;
-                printf("Digite o nome da cidade para qual deseja programar a viagem:\n");
+                
+                printf("Qual o nome da cidade para qual deseja programar a viagem:\n");
+                while (getchar() != '\n'); 
                 fgets(nomeCidade, sizeof(nomeCidade), stdin);
-                definirViagem(nomeCidade, duracao);
+                nomeCidade[strcspn(nomeCidade, "\n")] = '\0';
+                
+                printf("Qual a duração da sua estadia em dias?\n");
+                scanf("%d", &duracao);
+                
+                viagemProgramada = definirViagem(nomeCidade, duracao);
+                
                 // questionario para experiencia personalizada
                 aplicarQuestionario(&natureza, &cultural, &festivo, &relaxante);
+                
                 // aplica pontuação nas atrações de cada cidade
                 Cidades* cidadeAtual = listaCidades;
-                while (cidadeAtual != nomeCidade) {
-                    cidadeAtual = cidadeAtual->prox;
-                    aplicarPontuacaoNasAtracoes(cidadeAtual->atracao, natureza, cultural, festivo, relaxante);
+                while (cidadeAtual != NULL && strcmp(cidadeAtual->nome, nomeCidade) != 0) {
+                        cidadeAtual = cidadeAtual->prox;
                 }
+                
+                if (cidadeAtual == NULL) {
+                    printf("Cidade não encontrada!\n");
+                    break;
+                }
+                aplicarPontuacaoNasAtracoes(cidadeAtual->atracao, natureza, cultural, festivo, relaxante);
                 imprimeRoteiroPersonalizado(cidadeAtual, viagemProgramada);
                 break;
+            
             case 4:
                 printf("Encerrando a aplicação.\n");
                 break;
