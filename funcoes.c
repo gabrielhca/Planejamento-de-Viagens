@@ -230,8 +230,7 @@ void listarCidadesComAtracoes(Cidades *lista) {
         cidadeAtual = cidadeAtual->prox;
     }
 }
-/*Função feita para mostrar o ranking das atrações, de acordo com a pontuação aplicada pelo questionário, após estabelecer para onde será a viagem. Mostra
-inicialmente as atrações com pontuação/pontuação maiores e depois as sem pontuação.*/
+
 void mostrarRanking(Descritor *d) {
     if (d == NULL || d->cauda == NULL) {
         printf("Nenhuma atração cadastrada.\n");
@@ -261,12 +260,12 @@ void mostrarRanking(Descritor *d) {
     } while (atual != d->cauda->prox);
 }
 
-/*Menu admnistrativo, criado para organizar a inclusão e exclusão de cidades. Recebe um ponteiro duplo do tipo Cidades*/
 void menuAdministrativo(Cidades **lista) {
     int senha;
     printf("\nDigite a senha de acesso: ");
     scanf("%d", &senha);
     
+    int opcao;
     while(senha != 123){
         printf("Senha incorreta! Tente novamente ou digite 1 para voltar ao menu principal\n");
         scanf("%d", &senha);
@@ -277,8 +276,6 @@ void menuAdministrativo(Cidades **lista) {
             return;
         }
     }
-
-    int opcao;
     do {
         printf("\n=== MENU ADMINISTRATIVO ===\n");
         printf("1 - Adicionar cidade\n");
@@ -493,8 +490,7 @@ void imprimeRoteiroPersonalizado(Cidades *lista, Viagem *viagemProgramada) {
         printf("\n");
     }
 }
-/*Função para liberar memória tanto da cidade quanto das atrações. Recebe como parametro listaCidades do tipo cidade e percorre as atrações, limpando os dados
-com free*/
+
 void liberarMemoria(Cidades *listaCidades) {
     Cidades *cidadeAtual = listaCidades;
     
