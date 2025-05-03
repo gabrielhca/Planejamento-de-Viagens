@@ -261,11 +261,11 @@ void mostrarRanking(Descritor *d) {
 }
 
 void menuAdministrativo(Cidades **lista) {
-    char senha[20];
+    int senha;
     printf("\nDigite a senha de acesso: ");
-    scanf("%s", senha);
+    scanf("%d", &senha);
     
-    if (strcmp(senha, "admin123") != 0) {
+    if (senha != 123) {
         printf("Senha incorreta!\n");
         return;
     }
@@ -278,6 +278,7 @@ void menuAdministrativo(Cidades **lista) {
         printf("3 - Voltar\n");
         printf("Escolha: ");
         scanf("%d", &opcao);
+        while (getchar() != '\n');
 
         switch (opcao) {
             case 1: {
@@ -291,7 +292,8 @@ void menuAdministrativo(Cidades **lista) {
             case 2: {
                 char nome[30];
                 printf("Nome da cidade para remover: ");
-                scanf("%s", nome);
+                fgets(nome, sizeof(nome), stdin);
+                nome[strcspn(nome, "\n")] = '\0'; 
                 removerCidade(lista, nome);
                 break;
             }
@@ -327,38 +329,39 @@ Cidades* buscarCidade(Cidades* lista, const char *nome) {
 /*Função que ordena as atrações por pontuação. A ordenação é feita trocando os dados da cidade com maior pontuação pela de menor pontuação, se esta estiver
 numa posição superior à ela. */
 void ordenarAtracoesPontuacao(Descritor *d) {
-    if (d == NULL || d->cauda == NULL) {
-        return;
-    }
+    if (d == NULL || d->cauda == NULL) return;
 
-    Atracoes *inicio = d->cauda->prox;
-    Atracoes *atual = inicio;
+    int trocou;
+    Atracoes *atual;
+    Atracoes *ultimo = NULL;
 
     do {
-        Atracoes *proximo = atual->prox;
-        do {
-            if (proximo->pontuacao > atual->pontuacao) {
-                // Troca os dados (NÃO troca os ponteiros)
-                char tempNome[100];
-                strcpy(tempNome, atual->atracao);
-                strcpy(atual->atracao, proximo->atracao);
-                strcpy(proximo->atracao, tempNome);
+        trocou = 0;
+        atual = d->cauda->prox; // Começa do primeiro elemento
 
-                int tempCategoria = atual->categoria;
-                atual->categoria = proximo->categoria;
-                proximo->categoria = tempCategoria;
-
-                int tempPontuacao = atual->pontuacao;
-                atual->pontuacao = proximo->pontuacao;
-                proximo->pontuacao = tempPontuacao;
+        while (atual->prox != d->cauda->prox && atual->prox != ultimo) {
+            if (atual->pontuacao < atual->prox->pontuacao) { // Ordena DESCENDENTE
+                // Troca os dados mantendo a integridade da lista circular
+                Atracoes temp = *atual;
+                
+                // Troca nome
+                strcpy(atual->atracao, atual->prox->atracao);
+                strcpy(atual->prox->atracao, temp.atracao);
+                
+                // Troca outros campos
+                atual->categoria = atual->prox->categoria;
+                atual->prox->categoria = temp.categoria;
+                
+                atual->pontuacao = atual->prox->pontuacao;
+                atual->prox->pontuacao = temp.pontuacao;
+                
+                trocou = 1;
             }
-            proximo = proximo->prox;
-        } while (proximo != inicio);
-
-        atual = atual->prox;
-    } while (atual != inicio);
+            atual = atual->prox;
+        }
+        ultimo = atual;
+    } while (trocou);
 }
-
 /*Função de remover cidade, utiliza como parametro lista do tipo Cidades e nome, para que possamos buscar a cidade. reaproveitamos a função de buscarCidade
 para poder localizar e retornar a cidade que queremos remover.*/
 void removerCidade(Cidades **lista, const char nome[]){
@@ -506,4 +509,3 @@ void liberarMemoria(Cidades *listaCidades) {
         free(cidadeTemp);
     }
 }
-
