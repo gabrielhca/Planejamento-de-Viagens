@@ -220,12 +220,8 @@ void listarCidadesComAtracoes(Cidades *lista) {
             Atracoes *atracaoAtual = cidadeAtual->atracao->cauda;
             Atracoes *inicio = atracaoAtual;
             do {
-                printf("  - %s (%s)\n", atracaoAtual->atracao, 
-                    atracaoAtual->categoria == NATUREZA ? "Natureza" :
-                    atracaoAtual->categoria == CULTURAL ? "Cultural" :
-                    atracaoAtual->categoria == FESTIVO ? "Festivo" :
-                    atracaoAtual->categoria == RELAXANTE ? "Relaxante" : "Desconhecido"
-                );
+                printf("  - %s | Descrição: %s | Horário: %s\n", 
+                    atracaoAtual->atracao, atracaoAtual->descricao, atracaoAtual->descricaoHorario);
                 atracaoAtual = atracaoAtual->prox;
             } while (atracaoAtual != inicio); // porque é lista circular
         }
@@ -234,6 +230,75 @@ void listarCidadesComAtracoes(Cidades *lista) {
         cidadeAtual = cidadeAtual->prox;
     }
 }
+
+void mostrarRanking(Descritor *d) {
+    if (d == NULL || d->cauda == NULL) {
+        printf("Nenhuma atração cadastrada.\n");
+        return;
+    }
+
+    printf("\n=== ATRAÇÕES PRIORITÁRIAS ===\n");
+    Atracoes *atual = d->cauda->prox;
+    int cont = 0;
+    
+    // Primeiro mostra as com pontuação
+    do {
+        if (atual->pontuacao > 0) {
+            printf("%d. %s - Pontuação: %d\n", ++cont, atual->atracao, atual->pontuacao);
+        }
+        atual = atual->prox;
+    } while (atual != d->cauda->prox);
+
+    printf("\n=== ATRAÇÕES SECUNDÁRIAS ===\n");
+    cont = 0;
+    atual = d->cauda->prox;
+    do {
+        if (atual->pontuacao == 0) {
+            printf("%d. %s\n", ++cont, atual->atracao);
+        }
+        atual = atual->prox;
+    } while (atual != d->cauda->prox);
+}
+
+void menuAdministrativo(Cidades **lista) {
+    char senha[20];
+    printf("\nDigite a senha de acesso: ");
+    scanf("%s", senha);
+    
+    if (strcmp(senha, "admin123") != 0) {
+        printf("Senha incorreta!\n");
+        return;
+    }
+
+    int opcao;
+    do {
+        printf("\n=== MENU ADMINISTRATIVO ===\n");
+        printf("1 - Adicionar cidade\n");
+        printf("2 - Remover cidade\n");
+        printf("3 - Voltar\n");
+        printf("Escolha: ");
+        scanf("%d", &opcao);
+
+        switch (opcao) {
+            case 1: {
+                Cidades nova;
+                printf("Nome da cidade: ");
+                scanf("%s", nova.cidade);
+                inserirnoInicioCidade(lista, nova);
+                printf("Cidade adicionada!\n");
+                break;
+            }
+            case 2: {
+                char nome[30];
+                printf("Nome da cidade para remover: ");
+                scanf("%s", nome);
+                removerCidade(lista, nome);
+                break;
+            }
+        }
+    } while (opcao != 3);
+}
+
 
 //Função para definir a viagem e a estadia. 
 void definirViagem(Viagem* viagem, Cidades* cidade, int dias) {
@@ -409,12 +474,8 @@ void imprimeRoteiroPersonalizado(Cidades *lista, Viagem *viagemProgramada) {
     for (int dia = 1; dia <= dias && atracoesRestantes > 0; dia++) {
         printf("Dia %d:\n", dia);
         for (int i = 0; i < porDia && atracoesRestantes > 0; i++) {
-            printf(" - %s (%s)\n",
-                   atracaoAtual->atracao,
-                   atracaoAtual->categoria == NATUREZA   ? "Natureza" :
-                   atracaoAtual->categoria == CULTURAL   ? "Cultural" :
-                   atracaoAtual->categoria == FESTIVO    ? "Festivo"  :
-                                                           "Relaxante");
+            printf("  - %s | Descrição: %s | Horário: %s\n",
+                   atracaoAtual->atracao, atracaoAtual->descricao, atracaoAtual->descricaoHorario);
             atracaoAtual = atracaoAtual->prox;
             atracoesRestantes--;
         }
