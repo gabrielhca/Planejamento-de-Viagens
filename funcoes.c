@@ -19,7 +19,15 @@ void inserirnoInicioCidade (Cidades** lista, Cidades novaCidade){
         printf ("Erro na alocação de memória da Cidade!\n");
         return;
     }
-    *nova = novaCidade;
+    strcpy(nova->cidade, novaCidade.cidade);
+    nova->atracao = (Descritor *)malloc(sizeof(Descritor));
+    if (nova->atracao == NULL) {
+        printf("Erro ao alocar memória para descritor de atrações.\n");
+        free(nova);
+        return;
+    }
+    nova->atracao->cauda = NULL;
+    nova->atracao->quantidade = 0;
 
     nova->ant = NULL; 
     nova->prox = *lista;
@@ -177,8 +185,9 @@ void carregarDados(Cidades **listaCidades) {
         novaAtracao.ant = NULL;
         
         inserirAtracao(cidadeAtual->atracao, novaAtracao);
-        fclose(arquivo);
         }
+        fclose(arquivo);
+}
 
 
 
@@ -211,7 +220,7 @@ void listarCidadesComAtracoes(Cidades *lista) {
         if (cidadeAtual->atracao == NULL) {
             printf("  Nenhuma atração cadastrada.\n");
         } else {
-            Atracoes *atracaoAtual = cidadeAtual->atracao;
+            Atracoes *atracaoAtual = cidadeAtual->atracao->cauda;
             Atracoes *inicio = atracaoAtual;
             do {
                 printf("  - %s (%s)\n", atracaoAtual->atracao, 
