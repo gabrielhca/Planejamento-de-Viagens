@@ -76,7 +76,7 @@ int main() {
                 do {
                     printf("\n1 - Ver ranking de prioridades\n");
                     printf("2 - Roteiro personalizado\n");
-                    printf("3 - Retornar ao menu anterior\n");
+                    printf("3 - Ver outras cidades\n");
                     printf("Escolha: ");
                     scanf("%d", &opcaoRoteiro);
 
@@ -87,7 +87,9 @@ int main() {
                         case 2:
                             imprimeRoteiroPersonalizado(cidadeAtual, viagemProgramada);
                             break;
-                        case 3:                            
+                        case 3:
+                            listarCidades(listaCidades);
+                            
                             break;
                     }
                 } while (opcaoRoteiro != 3);
@@ -102,7 +104,7 @@ int main() {
             default:
                 printf("Opção inválida!\n");
         }
-    }while (opcao != 4);
+    }while (opcao != 5);
 
     liberarMemoria(listaCidades);
 
