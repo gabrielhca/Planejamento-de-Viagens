@@ -153,40 +153,37 @@ void carregarDados(Cidades **listaCidades) {
     char nomeCidade[30], nomeAtracao[40], descricao[100], descricaoHorario[50];
     int categoria;
 
-    // Lê o arquivo linha por linha
     while (fscanf(arquivo, "%[^;];%[^;];%d;%[^;];%[^\n]\n", nomeCidade, nomeAtracao, &categoria, descricao, descricaoHorario) == 5) {
-        // Verifica se a cidade já existe na lista
         Cidades *cidadeAtual = *listaCidades;
         while (cidadeAtual != NULL && strcmp(cidadeAtual->cidade, nomeCidade) != 0) {
             cidadeAtual = cidadeAtual->prox;
         }
 
-        // Se a cidade não foi encontrada, cria uma nova cidade
+        // Se a cidade não foi encontrada, cria e insere uma nova
         if (cidadeAtual == NULL) {
             Cidades novaCidade;
             strcpy(novaCidade.cidade, nomeCidade);
             novaCidade.atracao = NULL;
-            novaCidade.prox = *listaCidades;
+            novaCidade.prox = NULL;
             novaCidade.ant = NULL;
             inserirnoInicioCidade(listaCidades, novaCidade);
-            
-            cidadeAtual = *listaCidades;
+            cidadeAtual = *listaCidades; // Atualiza ponteiro
         }
-    }
 
-        // Cria uma nova atração
+        // Cria e insere nova atração
         Atracoes novaAtracao;
         strcpy(novaAtracao.atracao, nomeAtracao);
         novaAtracao.categoria = categoria;
         strcpy(novaAtracao.descricao, descricao);
         strcpy(novaAtracao.descricaoHorario, descricaoHorario);
-        novaAtracao.pontuacao = 0;  // Inicializando a pontuação como 0
+        novaAtracao.pontuacao = 0;
         novaAtracao.prox = NULL;
         novaAtracao.ant = NULL;
-        
+
         inserirAtracao(cidadeAtual->atracao, novaAtracao);
-        }
-        fclose(arquivo);
+    }
+
+    fclose(arquivo);
 }
 
 
