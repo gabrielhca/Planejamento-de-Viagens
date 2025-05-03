@@ -86,5 +86,6 @@ void imprimeRoteiroPersonalizado(Cidades *lista, Viagem *listaViagem);
 
 void liberarMemoria(Cidades *listaCidades);
 
+void menuAdministrativo(Cidades **lista);
 
 #endif 
