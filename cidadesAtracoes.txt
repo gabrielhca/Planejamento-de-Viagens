@@ -3,19 +3,39 @@ Belém;Mercado Ver-o-Peso;1;Feira ao ar livre de iguarias regionais e artesanato
 Belém;Bar Point do Açaí;2;Espaço com música ao vivo e pratos à base de açaí.;18:00 - 01:00
 Belém;Estação das Docas (eventos);1;Shows e feiras culturais na área portuária revitalizada.;19:00 - 00:00
 Belém;Pissolati Café;3;Café acolhedor e sofisticado, perfeito para relaxar e apreciar bebidas artesanais e doces.;08:00 - 20:00
+Belém;Basílica de Nazaré;1;Igreja histórica, palco do Círio de Nazaré.;06:00 - 20:00  
+Belém;Praça Batista Campos;0;Praça arborizada com lagos e coretos.;06:00 - 22:00  
+Belém;Boteco das Onze;2;Bar descontraído com petiscos regionais e chope.;17:00 - 02:00  
+Belém;Cine Líbero Luxardo;3;Cinema alternativo com filmes nacionais e internacionais.;15:00 - 22:00  
 Goiânia;Parque Flamboyant;0;Jardins, lago e pista de caminhada.;06:00 - 20:00
 Goiânia;Centro cultural Oscar Niemeyer;1;Centro de exposições e apresentações culturais.;10:00 - 18:00
 Goiânia;Bolshoi Pub;2;Bar temático com música ao vivo e drinks artesanais.;19:00 - 02:00
 Goiânia;Café Flor do Cerrado;3;Ambiente calmo com menu de cafés especiais.;08:00 - 20:00
+Goiânia;Bosque dos Buritis;0;Parque urbano com lago, esculturas e tartarugas.;06:00 - 20:00  
+Goiânia;Museu Zoroastro Artiaga;1;Acervo sobre a história e cultura goiana.;09:00 - 17:00  
+Goiânia;Imerse Bar;2;Bar de drinks exóticos com música eletrônica.;20:00 - 03:00  
+Goiânia;Café Cariño;3;Café com quitutes veganos e ambiente intimista.;09:00 - 21:00  
 Porto Alegre;Parque Farroupilha (Redenção);0;Largo histórico com pista de caminhada e feiras.;05:00 - 22:00
 Porto Alegre;Mercado Público;1;Comércio de comidas típicas e artesanato.;07:00 - 19:00
 Porto Alegre;Festival de Jazz (Bola 8);2;Roda de jazz com músicos locais e convidados.;20:00 - 00:00
 Porto Alegre;Boulevard Café;3;Espaço calmo com cafés especiais e leitura.;08:00 - 22:00
+Porto Alegre;Usina do Gasômetro;0;Ponto turístico à beira do Guaíba para ver o pôr do sol.;08:00 - 22:00  
+Porto Alegre;Casa de Cultura Mario Quintana;1;Centro cultural com exposições, cinema e teatro.;10:00 - 20:00  
+Porto Alegre;Quintal Bar;2;Bar ao ar livre com música e petiscos.;18:00 - 02:00  
+Porto Alegre;Café do Mercado;3;Café charmoso dentro do Mercado Público.;08:00 - 19:00  
 Salvador;Pelourinho;1;Centro histórico com casarões coloniais e igrejas.;09:00 - 17:00
 Salvador;Farol da Barra;0;Mirante e praia calma junto ao icônico farol.;08:00 - 19:00
 Salvador;Largo do Pelourinho (bloco);2;Shows de samba-reggae e festas de rua.;20:00 - 02:00
+Salvador;Elevador Lacerda;0;Elevador que conecta a Cidade Alta à Cidade Baixa com bela vista.;07:00 - 22:00  
+Salvador;Museu de Arte da Bahia;1;Acervo de arte sacra, moderna e mobiliário histórico.;14:00 - 19:00  
+Salvador;Commons Studio Bar;2;Casa de shows alternativos e festas temáticas.;18:00 - 02:00  
+Salvador;Café Solar;3;Café cultural com exposições e música ambiente.;10:00 - 22:00  
 Salvador;Café Literário da Fundação Casa de Jorge Amado;3;Espaço tranquilo para leitura e música ao vivo.;17:00 - 22:00
 Rio de Janeiro;Cristo Redentor / Parque da Tijuca;0;Trilha e vista panorâmica da cidade.;08:00 - 18:00
 Rio de Janeiro;Museu do Amanhã;1;Espaço de ciência e tecnologia interativa na zona portuária.;10:00 - 18:00
 Rio de Janeiro;Lapa (Arcos e bares);2;Sede dos tradicionais blocos de samba e bares.;18:00 - 03:00
 Rio de Janeiro;Praia de Copacabana (pôr do sol);3;Caminhada no calçadão ao entardecer.;17:00 - 19:00
+Rio de Janeiro;Parque Lage;0;Parque com jardins, trilhas e vista para o Cristo.;08:00 - 17:00  
+Rio de Janeiro;MAR (Museu de Arte do Rio);1;Museu com exposições de arte moderna e contemporânea.;11:00 - 19:00  
+Rio de Janeiro;Baixo Gávea;2;Polo boêmio com bares, música e gente jovem.;19:00 - 02:00  
+Rio de Janeiro;Café Secreto;3;Café escondido com ambiente vintage e jazz ao vivo.;10:00 - 22:00
