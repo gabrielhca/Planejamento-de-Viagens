@@ -47,11 +47,11 @@ void inserirAtracao(Descritor *d, Atracoes novaAtracao){
     } else {
         // Insere após a cauda atual (fim da lista circular)
         Atracoes *primeiro = d->cauda->prox;
-        nova->prox          = primeiro;
-        nova->ant           = d->cauda;
-        d->cauda->prox      = nova;
-        primeiro->ant       = nova;
-        d->cauda            = nova;       // nova vira a nova cauda
+        nova->prox = primeiro;
+        nova->ant = d->cauda;
+        d->cauda->prox = nova;
+        primeiro->ant = nova;
+        d->cauda = nova;       // nova vira a nova cauda
     }
 
     d->quantidade++;  // incrementa o total
@@ -164,6 +164,7 @@ void carregarDados(Cidades **listaCidades) {
             
             cidadeAtual = *listaCidades;
         }
+    }
 
         // Cria uma nova atração
         Atracoes novaAtracao;
@@ -175,12 +176,11 @@ void carregarDados(Cidades **listaCidades) {
         novaAtracao.prox = NULL;
         novaAtracao.ant = NULL;
         
-        inserirAtracao(&cidadeAtual->atracao, novaAtracao);
+        inserirAtracao(cidadeAtual->atracao, novaAtracao);
+        fclose(arquivo);
         }
-    }
 
-    fclose(arquivo);
-}
+
 
 /*Função feita para imprimir todas as cidades cadastradas, sem as atrações*/
 void listarCidades(Cidades *lista){
@@ -239,7 +239,7 @@ void definirViagem(Viagem* viagem, Cidades* cidade, int dias) {
 
 
 //Função para buscar para qual cidade a pessoa irá viajar. Verifica se a cidade existe na lista, se sim, retorna a cidade) 
-Cidades* buscarCidade(Cidades* lista, char nome[]) {
+Cidades* buscarCidade(Cidades* lista, const char *nome) {
     Cidades* atual = lista;
 
     while (atual != NULL) {          
@@ -290,7 +290,7 @@ void ordenarAtracoesPontuacao(Descritor *d) {
 
 /*Função de remover cidade, utiliza como parametro lista do tipo Cidades e nome, para que possamos buscar a cidade. reaproveitamos a função de buscarCidade
 para poder localizar e retornar a cidade que queremos remover.*/
-void removerCidade(Cidades **lista, char nome[]){
+void removerCidade(Cidades **lista, const char nome[]){
     Cidades* remove = buscarCidade(*lista, nome);
     if(remove == NULL){
         return;
@@ -397,7 +397,7 @@ void imprimeRoteiroPersonalizado(Cidades *lista, Viagem *viagemProgramada) {
     if (porDia == 0) porDia = 1;
 
     Atracoes *atracaoAtual = d->cauda->prox;
-    printf("Roteiro Diário:\n);
+    printf("Roteiro Diário:\n");
 
     // Imprime roteiro dia a dia
     for (int dia = 1; dia <= dias && atracoesRestantes > 0; dia++) {
