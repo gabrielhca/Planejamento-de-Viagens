@@ -57,7 +57,7 @@ int main() {
                     printf("Cidade não encontrada!\n");
                     break;
                 }
-                viagemProgramada = definirViagem(viagemProgramada, cidadeSelecionada, duracao);
+                definirViagem(viagemProgramada, cidadeSelecionada, duracao);
                 
                 // questionario para experiencia personalizada
                 aplicarQuestionario(&natureza, &cultural, &festivo, &relaxante);
