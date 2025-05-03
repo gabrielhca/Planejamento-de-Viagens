@@ -415,4 +415,28 @@ void imprimeRoteiroPersonalizado(Cidades *lista, Viagem *viagemProgramada) {
         printf("\n");
     }
 }
+
+void liberarMemoria(Cidades *listaCidades) {
+    Cidades *cidadeAtual = listaCidades;
     
+    while (cidadeAtual != NULL) {
+        Cidades *cidadeTemp = cidadeAtual;
+
+        if (cidadeAtual->atracao != NULL && cidadeAtual->atracao->cauda != NULL) {
+            Atracoes *inicio = cidadeAtual->atracao->cauda->prox;
+            Atracoes *atual = inicio;
+
+            do {
+                Atracoes *proxima = atual->prox;
+                free(atual);
+                atual = proxima;
+            } while (atual != NULL && atual != inicio);
+
+            free(cidadeAtual->atracao);  // libera o descritor
+        }
+
+        cidadeAtual = cidadeAtual->prox;
+        free(cidadeTemp);
+    }
+}
+
