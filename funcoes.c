@@ -487,7 +487,8 @@ void imprimeRoteiroPersonalizado(Cidades *lista, Viagem *viagemProgramada) {
         printf("\n");
     }
 }
-
+/*Função para liberar memória tanto da cidade quanto das atrações. Recebe como parametro listaCidades do tipo cidade e percorre as atrações, limpando os dados
+com free*/
 void liberarMemoria(Cidades *listaCidades) {
     Cidades *cidadeAtual = listaCidades;
     
