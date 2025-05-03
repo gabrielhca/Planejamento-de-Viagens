@@ -8,11 +8,6 @@ int main() {
     Viagem* viagemProgramada = NULL;
     Cidades* listaCidades = criaListaVazia();
 
-    if(listaCidades == NULL){
-        printf("Erro ao alocar memória para as cidades!\n");
-        return 1;
-    }
-
     // carrega os dados das cidades e atrações
     carregarDados(&listaCidades);
     int opcao;
@@ -20,24 +15,19 @@ int main() {
 
     do {
         printf("\n----------------------- MENU PRINCIPAL -----------------------\n");
-        printf("1 - Ver destinos\n");
-        printf("2 - Ver destinos com atrações\n");
-        printf("3 - Programar viagem\n");
-        printf("4 - Acesso administrativo\n");
-        printf("5 - Sair\n");
+        printf("1 - Ver destinos com atrações\n");
+        printf("2 - Programar viagem\n");
+        printf("3 - Acesso administrativo\n");
+        printf("4 - Sair\n");
         printf("Escolha: ");
         scanf("%d", &opcao);
 
         switch (opcao) {
             case 1:
-                listarCidades(listaCidades);
-                break;
-            
-            case 2:
                 listarCidadesComAtracoes(listaCidades);
                 break;
             
-            case 3:
+            case 2:
                 printf("\n=== CIDADES DISPONÍVEIS ===\n");
                 listarCidades(listaCidades);
                 char nomeCidade[30];
@@ -65,7 +55,10 @@ int main() {
                 
                 // questionario para experiencia personalizada
                 printf("\nPara garantir uma experiência única, responda o questionário a seguir:\n");
+                printf("Com ele montaremos um roteiro de viagem exclusivo para você, de acordo com suas preferências pessoais.");
                 aplicarQuestionario(&natureza, &cultural, &festivo, &relaxante);
+                
+                printf("Prontinho! Agora já temos organizada uma viagem inesquecível para você!\n O que deseja fazer?\n");
                 
                 // aplica pontuação nas atrações de cada cidade
                 Cidades* cidadeAtual = listaCidades;
@@ -96,16 +89,16 @@ int main() {
                             break;
                         case 3:
                             listarCidades(listaCidades);
+                            
                             break;
                     }
                 } while (opcaoRoteiro != 3);
                 break;
-            }
             
-            case 4:
+            case 3:
                 menuAdministrativo(&listaCidades);
                 break;
-            case 5:
+            case 4:
                 printf("Saindo da aplicação...\n");
                 break;
             default:
