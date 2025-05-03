@@ -52,7 +52,12 @@ int main() {
                     printf("Erro ao alocar memória para a viagem!\n");
                     break;
                 }
-                viagemProgramada = definirViagem(viagemProgramada, nomeCidade, duracao);
+                Cidades *cidadeSelecionada = buscarCidade(listaCidades, nomeCidade);
+                if (cidadeSelecionada == NULL) {
+                    printf("Cidade não encontrada!\n");
+                    break;
+                }
+                viagemProgramada = definirViagem(viagemProgramada, cidadeSelecionada, duracao);
                 
                 // questionario para experiencia personalizada
                 aplicarQuestionario(&natureza, &cultural, &festivo, &relaxante);
