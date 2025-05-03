@@ -397,6 +397,7 @@ void imprimeRoteiroPersonalizado(Cidades *lista, Viagem *viagemProgramada) {
     if (porDia == 0) porDia = 1;
 
     Atracoes *atracaoAtual = d->cauda->prox;
+    printf("Roteiro Diário:\n);
 
     // Imprime roteiro dia a dia
     for (int dia = 1; dia <= dias && atracoesRestantes > 0; dia++) {
