@@ -100,6 +100,8 @@ int main() {
                 break;
             case 4:
                 printf("Saindo da aplicação...\n");
+                liberarMemoria(listaCidades);
+                return 0;
                 break;
             default:
                 printf("Opção inválida!\n");
