@@ -261,18 +261,18 @@ void mostrarRanking(Descritor *d) {
 }
 
 void menuAdministrativo(Cidades **lista) {
-    int senha;
+    char senha[25];
     printf("\nDigite a senha de acesso: ");
-    scanf("%d", &senha);
+    scanf("%s", senha);
     
     int opcao;
-    while(senha != 123){
+    while(strcmp(senha, "123" )!=0){
         printf("Senha incorreta! Tente novamente ou digite 1 para voltar ao menu principal\n");
-        scanf("%d", &senha);
-        if(senha==123){
+        scanf("%s", senha);
+        if(strcmp(senha, "123")==0){
             continue;
         }
-        else{
+        else if(strcmp(senha, "1")==0){
             return;
         }
     }
