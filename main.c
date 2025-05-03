@@ -16,17 +16,19 @@ int main() {
     // carrega os dados das cidades e atrações
     carregarDados(&listaCidades);
     int opcao;
+    int opcaoAdmin;
 
     do {
-        printf ("\n------------ O QUE DESEJA FAZER? ------------\n");
-        printf ("\n1 - Verificar destinos de viagens.\n");
-        printf ("\n2 - Verificar destinos de viagens e atrações disponíveis.\n");
-        printf ("\n3 - Programar viagem.\n");
-        printf ("\n4 - Sair\n");
-        printf ("\nEscolha uma opção:\n");
+        printf("\n----------------------- MENU PRINCIPAL -----------------------\n");
+        printf("1 - Ver destinos\n");
+        printf("2 - Ver destinos com atrações\n");
+        printf("3 - Programar viagem\n");
+        printf("4 - Acesso administrativo\n");
+        printf("5 - Sair\n");
+        printf("Escolha: ");
         scanf("%d", &opcao);
 
-        switch (opcao){
+        switch (opcao) {
             case 1:
                 listarCidades(listaCidades);
                 break;
@@ -36,6 +38,8 @@ int main() {
                 break;
             
             case 3:
+                printf("\n=== CIDADES DISPONÍVEIS ===\n");
+                listarCidades(listaCidades);
                 char nomeCidade[30];
                 int duracao;
                 
@@ -60,6 +64,7 @@ int main() {
                 definirViagem(viagemProgramada, cidadeSelecionada, duracao);
                 
                 // questionario para experiencia personalizada
+                printf("\nPara garantir uma experiência única, responda o questionário a seguir:\n");
                 aplicarQuestionario(&natureza, &cultural, &festivo, &relaxante);
                 
                 // aplica pontuação nas atrações de cada cidade
@@ -73,16 +78,40 @@ int main() {
                     break;
                 }
                 aplicarPontuacaoNasAtracoes(cidadeAtual->atracao, natureza, cultural, festivo, relaxante);
-                imprimeRoteiroPersonalizado(cidadeAtual, viagemProgramada);
+                ordenarAtracoesPontuacao(cidadeAtual->atracao);
+                int opcaoRoteiro;
+                do {
+                    printf("\n1 - Ver ranking de prioridades\n");
+                    printf("2 - Roteiro personalizado\n");
+                    printf("3 - Ver outras cidades\n");
+                    printf("Escolha: ");
+                    scanf("%d", &opcaoRoteiro);
+
+                    switch (opcaoRoteiro) {
+                        case 1:
+                            mostrarRanking(cidadeAtual->atracao);
+                            break;
+                        case 2:
+                            imprimeRoteiroPersonalizado(cidadeAtual, viagemProgramada);
+                            break;
+                        case 3:
+                            listarCidades(listaCidades);
+                            break;
+                    }
+                } while (opcaoRoteiro != 3);
                 break;
+            }
             
             case 4:
-                printf("Encerrando a aplicação.\n");
+                menuAdministrativo(&listaCidades);
+                break;
+            case 5:
+                printf("Saindo da aplicação...\n");
                 break;
             default:
                 printf("Opção inválida!\n");
         }
-    }while (opcao != 4);
+    }while (opcao != 5);
 
     liberarMemoria(listaCidades);
 
