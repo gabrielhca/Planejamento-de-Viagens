@@ -74,5 +74,7 @@ int main() {
         }
     }while (opcao != 4);
 
+    void liberarMemoria(listaCidades);
+
     return 0;
 }
