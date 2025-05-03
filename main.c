@@ -10,6 +10,11 @@ int main() {
     // carrega os dados das cidades e atrações
     carregarDados(&listaCidades);
 
+    listarCidades(listaCidades);
+
+    char nomeCidade[30];
+    printf("Digite o nome da cidade para qual deseja programar a viagem:\n");
+    
     // questionario para experiencia personalizada
     aplicarQuestionario(&natureza, &cultural, &festivo, &relaxante);
     
