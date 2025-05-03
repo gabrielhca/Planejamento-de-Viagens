@@ -230,7 +230,8 @@ void listarCidadesComAtracoes(Cidades *lista) {
         cidadeAtual = cidadeAtual->prox;
     }
 }
-
+/*Função feita para mostrar o ranking das atrações, de acordo com a pontuação aplicada pelo questionário, após estabelecer para onde será a viagem. Mostra
+inicialmente as atrações com pontuação/pontuação maiores e depois as sem pontuação.*/
 void mostrarRanking(Descritor *d) {
     if (d == NULL || d->cauda == NULL) {
         printf("Nenhuma atração cadastrada.\n");
@@ -260,6 +261,7 @@ void mostrarRanking(Descritor *d) {
     } while (atual != d->cauda->prox);
 }
 
+/*Menu admnistrativo, criado para organizar a inclusão e exclusão de cidades. Recebe um ponteiro duplo do tipo Cidades*/
 void menuAdministrativo(Cidades **lista) {
     int senha;
     printf("\nDigite a senha de acesso: ");
