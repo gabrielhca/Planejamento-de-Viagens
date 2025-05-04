@@ -6,7 +6,6 @@
 #include <string.h>
 
 // Tipos de dados
-
 typedef enum { NATUREZA, CULTURAL, FESTIVO, RELAXANTE } Tag;
 
 // Lista circular de atrações
