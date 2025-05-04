@@ -280,7 +280,9 @@ void menuAdministrativo(Cidades **lista) {
         printf("\n=== MENU ADMINISTRATIVO ===\n");
         printf("1 - Adicionar cidade\n");
         printf("2 - Remover cidade\n");
-        printf("3 - Voltar\n");
+        printf("3 - Adicionar atração.\n");
+        printf("4 - Remover atração.\n");
+        printf("5 - Voltar\n");
         printf("Escolha: ");
         scanf("%d", &opcao);
         while (getchar() != '\n');
@@ -302,8 +304,69 @@ void menuAdministrativo(Cidades **lista) {
                 removerCidade(lista, nome);
                 break;
             }
+            case 3:{
+                char nomeCidade[30];
+                printf("Qual o nome da cidade que a atração pertence?\n");
+                fgets(nomeCidade, sizeof(nomeCidade), stdin);
+                nomeCidade[strcspn(nomeCidade, "\n")] = '\0';
+                
+                Cidades *cidadeEscolhida = buscarCidade(*lista, nomeCidade);
+                if (!cidadeEscolhida) {
+                    printf("Cidade %s não encontrada! Primeiro insira a cidade\n", nomeCidade);
+                    break;
+                }
+
+                Atracoes nova;
+                printf("Nome da atração: ");
+                fgets(nova.atracao, sizeof(nova.atracao), stdin);
+                nova.atracao[strcspn(nova.atracao, "\n")] = '\0';
+                
+                int categoriaAux;
+                printf("Categoria (0-Natureza, 1-Cultural, 2-Festivo, 3-Relaxante): ");
+                scanf("%d", &categoriaAux);
+                nova.categoria = (Tag)categoriaAux;
+                while (getchar() != '\n');
+
+                printf("Descrição: ");
+                fgets(nova.descricao, sizeof(nova.descricao), stdin);
+                nova.descricao[strcspn(nova.descricao, "\n")] = '\0';
+
+                printf("Horário (ex: 08:00 - 22:00): ");
+                fgets(nova.descricaoHorario, sizeof(nova.descricaoHorario), stdin);
+                nova.descricaoHorario[strcspn(nova.descricaoHorario, "\n")] = '\0';
+
+                inserirAtracao(cidadeEscolhida->atracao, nova);
+                printf("Atração adicionada com sucesso!\n");
+                break;
+                
+                case 4: { // Remover atração
+                char nomeCidade[30], nomeAtracao[40];
+                printf("Nome da cidade onde a atração está: ");
+                fgets(nomeCidade, sizeof(nomeCidade), stdin);
+                nomeCidade[strcspn(nomeCidade, "\n")] = '\0';
+                
+                Cidades *cidadeEscolhida = buscarCidade(*lista, nomeCidade);
+                if (!cidadeEscolhida) {
+                    printf("Cidade não encontrada!\n");
+                    break;
+                }
+
+                printf("Nome da atração a ser removida: ");
+                fgets(nomeAtracao, sizeof(nomeAtracao), stdin);
+                nomeAtracao[strcspn(nomeAtracao, "\n")] = '\0';
+
+                removerAtracao(cidadeEscolhida->atracao, nomeAtracao);
+                break;
+            }
+                case 5: // Voltar
+                printf("Voltando ao menu principal...\n");
+                break;
+                
+                default:
+                printf("Opção inválida!\n");
+            }
         }
-    } while (opcao != 3);
+    } while (opcao != 5);
 }
 
 
