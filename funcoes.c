@@ -62,14 +62,12 @@ void inserirAtracao(Descritor *d, Atracoes novaAtracao){
     d->quantidade++;  // incrementa o total
 }
 
-
-
 /* Função que faz a aplicação do questionário para o usuário, onde foi realizada a divisão do tipo de atividade nas categorias de natureza, cultural, 
 festivo e relaxante. As perguntas são feitas de acordo com as categorias e é acumulado a quantidade de pontos por tipo de atração para montar o roteiro.*/
 void aplicarQuestionario(int *natureza, int *cultural, int *festivo, int *relaxante) {
     int resposta;
 
-    printf("Responda com o número da opção escolhida.\n");
+    printf("Responda com o número da opção escolhida.\n\n");
 
     // Pergunta 1
     do {
@@ -233,19 +231,19 @@ void mostrarRanking(Descritor *d) {
         return;
     }
 
-    printf("\n=== ATRAÇÕES PRIORITÁRIAS ===\n");
+    printf("\n\t ATRAÇÕES PRIORITÁRIAS \t\n");
     Atracoes *atual = d->cauda->prox;
     int cont = 0;
     
     // Primeiro mostra as com pontuação
     do {
         if (atual->pontuacao > 0) {
-            printf("%d. %s - Pontuação: %d\n", ++cont, atual->atracao, atual->pontuacao);
+            printf("%d. %s\n", ++cont, atual->atracao);
         }
         atual = atual->prox;
     } while (atual != d->cauda->prox);
 
-    printf("\n=== ATRAÇÕES SECUNDÁRIAS ===\n");
+    printf("\n\t ATRAÇÕES SECUNDÁRIAS \t\n");
     cont = 0;
     atual = d->cauda->prox;
     do {
@@ -274,7 +272,7 @@ void menuAdministrativo(Cidades **lista) {
         }
     }
     do {
-        printf("\n=== MENU ADMINISTRATIVO ===\n");
+        printf("\n\t MENU ADMINISTRATIVO \tn\n");
         printf("1 - Adicionar cidade\n");
         printf("2 - Remover cidade\n");
         printf("3 - Adicionar atração.\n");
@@ -447,8 +445,8 @@ void removerCidade(Cidades **lista, const char nome[]){
         remove->prox->ant = remove->ant;
         remove->ant->prox = remove->prox;
     }
-free(remove);
-printf ("Cidade Removida\n");
+    free(remove);
+    printf ("Cidade Removida\n");
 }
 
 /*Função de remover atração. Utilizamos o descritor criado e nome para poder buscar a atração que desejamos fazer a remoção. É feito o processo de remoção
