@@ -84,10 +84,13 @@ void removerAtracao(Descritor *d, const char nome[]);
 //Imprime as atrações personalizadas para a viagem
 void imprimeRoteiroPersonalizado(Cidades *lista, Viagem *listaViagem);
 
+//libera a memoria dedicada para as cidades e atracoes
 void liberarMemoria(Cidades *listaCidades);
 
+//abre o menu administrativo
 void menuAdministrativo(Cidades **lista);
 
+//mostra o ranking das atracoes baseado na pontuacao
 void mostrarRanking(Descritor *d);
 
 #endif 
