@@ -8,11 +8,7 @@ Cidades* criaListaVazia (){
     return NULL;
 }
 
-/*Função para inserção no inicio da CIDADE. Neste caso e como farei alterações nos dados e nos ponteiros, estou utilizando ponteiros
-duplos e recebo como parametro a lista do tipo cidades e novaCidade que receberá a nova cidade a ser inserida. Faço o teste pra verificar 
-se a alocação de memória foi bem sucedida, do contrário imprime-se na tela. Faço com que o ponteiro criado chamado nova receba a novaCidade
-Nisso preciso realizar ajustes nos ponteiros, então o o campo ant de nova aponta para NULL, pois ela será o primeiro elemento 
-da lista duplamente encadeada (não circular). Faço com que o próximo do nova aponte para para o inicio da lista em nova->prox = *lista*/
+/*Função para inserção no inicio da cidade utilizando ponteiros duplos*/
 void inserirnoInicioCidade (Cidades** lista, Cidades novaCidade){
     Cidades* nova = (Cidades*)malloc(sizeof(Cidades));
     if (nova == NULL) {
@@ -37,6 +33,7 @@ void inserirnoInicioCidade (Cidades** lista, Cidades novaCidade){
     }
     *lista = nova;
 }
+
 /*Função para inserção de atrações. Utiliza o descritor como parametro e a lista de atrações. Faz a inserção no final da lista circular de atraçóes.*/
 void inserirAtracao(Descritor *d, Atracoes novaAtracao){
     Atracoes *nova = malloc(sizeof(Atracoes));
@@ -69,7 +66,6 @@ void inserirAtracao(Descritor *d, Atracoes novaAtracao){
 
 /* Função que faz a aplicação do questionário para o usuário, onde foi realizada a divisão do tipo de atividade nas categorias de natureza, cultural, 
 festivo e relaxante. As perguntas são feitas de acordo com as categorias e é acumulado a quantidade de pontos por tipo de atração para montar o roteiro.*/
-
 void aplicarQuestionario(int *natureza, int *cultural, int *festivo, int *relaxante) {
     int resposta;
 
@@ -115,6 +111,7 @@ void aplicarQuestionario(int *natureza, int *cultural, int *festivo, int *relaxa
         else printf("Resposta incorreta. Tente novamente.\n");
     } while (resposta != 1 && resposta != 2);
 }
+
 /*A função recebe como parametro o descritor que está associado à lista de atrações e os dados do questionário. A função aplica a pontuação nas atrações que
 estão distribuidas de acordo com as categorias definidas. Dessa forma conseguimos priorizar qual atração será feita em que ordem.*/
 void aplicarPontuacaoNasAtracoes(Descritor *d, int natureza, int cultural, int festivo, int relaxante) {
@@ -141,7 +138,7 @@ void aplicarPontuacaoNasAtracoes(Descritor *d, int natureza, int cultural, int f
     } while (aux != inicio);
 }
 
-/*Função que carrega os dados do arquivo 'cidadesAtracoes.txt', no formato: NomeCidade;NomeAtracao;Categoria;Descricao;Horario. 
+/*Função que carrega os dados do arquivo 'cidadesAtracoes.txt', no formato: NomeCidade;NomeAtracao;Categoria;Descricao;DescricaoHorario. 
 A função insere cidades e atrações na estrutura de dados conforme lidas. */
 void carregarDados(Cidades **listaCidades) {
     FILE *arquivo = fopen("cidadesAtracoes.txt", "r");
@@ -186,8 +183,6 @@ void carregarDados(Cidades **listaCidades) {
     fclose(arquivo);
 }
 
-
-
 /*Função feita para imprimir todas as cidades cadastradas, sem as atrações*/
 void listarCidades(Cidades *lista){
     if(lista == NULL){
@@ -230,6 +225,7 @@ void listarCidadesComAtracoes(Cidades *lista) {
         cidadeAtual = cidadeAtual->prox;
     }
 }
+
 /*mostra o ranking das atracoes de acordo com a pontuacao*/
 void mostrarRanking(Descritor *d) {
     if (d == NULL || d->cauda == NULL) {
@@ -259,6 +255,7 @@ void mostrarRanking(Descritor *d) {
         atual = atual->prox;
     } while (atual != d->cauda->prox);
 }
+
 /*abre o menu administrativo que tem as opcoes de adicionar cidade/atracao, remover cidade/atracao,*/
 void menuAdministrativo(Cidades **lista) {
     char senha[25];
@@ -369,7 +366,6 @@ void menuAdministrativo(Cidades **lista) {
     } while (opcao != 5);
 }
 
-
 //Função para definir a viagem e a estadia. 
 void definirViagem(Viagem* viagem, Cidades* cidade, int dias) {
     viagem->cidade = cidade;
@@ -377,7 +373,6 @@ void definirViagem(Viagem* viagem, Cidades* cidade, int dias) {
 
     printf("Viagem definida: %s por %d dias.\n", cidade->cidade, dias);
 }
-
 
 //Função para buscar para qual cidade a pessoa irá viajar. Verifica se a cidade existe na lista, se sim, retorna a cidade) 
 Cidades* buscarCidade(Cidades* lista, const char *nome) {
@@ -553,6 +548,7 @@ void imprimeRoteiroPersonalizado(Cidades *lista, Viagem *viagemProgramada) {
         printf("\n");
     }
 }
+
 //libera a memoria dedicada as cidades e as atracoes
 void liberarMemoria(Cidades *listaCidades) {
     Cidades *cidadeAtual = listaCidades;
