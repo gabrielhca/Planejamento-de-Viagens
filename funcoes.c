@@ -230,7 +230,7 @@ void listarCidadesComAtracoes(Cidades *lista) {
         cidadeAtual = cidadeAtual->prox;
     }
 }
-
+/*mostra o ranking das atracoes de acordo com a pontuacao*/
 void mostrarRanking(Descritor *d) {
     if (d == NULL || d->cauda == NULL) {
         printf("Nenhuma atração cadastrada.\n");
@@ -259,7 +259,7 @@ void mostrarRanking(Descritor *d) {
         atual = atual->prox;
     } while (atual != d->cauda->prox);
 }
-
+/*abre o menu administrativo que tem as opcoes de adicionar cidade/atracao, remover cidade/atracao,*/
 void menuAdministrativo(Cidades **lista) {
     char senha[25];
     printf("\nDigite a senha de acesso: ");
@@ -553,7 +553,7 @@ void imprimeRoteiroPersonalizado(Cidades *lista, Viagem *viagemProgramada) {
         printf("\n");
     }
 }
-
+//libera a memoria dedicada as cidades e as atracoes
 void liberarMemoria(Cidades *listaCidades) {
     Cidades *cidadeAtual = listaCidades;
     
