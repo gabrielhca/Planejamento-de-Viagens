@@ -1,10 +1,6 @@
 #ifndef _FUNCOES_H
 #define _FUNCOES_H
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
 // Tipos de dados
 typedef enum { NATUREZA, CULTURAL, FESTIVO, RELAXANTE } Tag;
 
