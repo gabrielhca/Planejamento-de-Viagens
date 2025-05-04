@@ -14,7 +14,7 @@ int main() {
     int opcaoAdmin;
 
     do {
-        printf("\n----------------------- MENU PRINCIPAL -----------------------\n");
+        printf("\n\t MENU PRINCIPAL \t\n\n");
         printf("1 - Ver destinos com atrações\n");
         printf("2 - Programar viagem\n");
         printf("3 - Acesso administrativo\n");
@@ -28,7 +28,7 @@ int main() {
                 break;
             
             case 2:
-                printf("\n=== CIDADES DISPONÍVEIS ===\n");
+                printf("\n\t CIDADES DISPONÍVEIS \t\n\n");
                 listarCidades(listaCidades);
                 char nomeCidade[30];
                 int duracao;
@@ -43,22 +43,22 @@ int main() {
 
                 viagemProgramada = (Viagem *)malloc(sizeof(Viagem));
                 if (viagemProgramada == NULL) {
-                    printf("Erro ao alocar memória para a viagem!\n");
+                    printf("\nErro ao alocar memória para a viagem!\n");
                     break;
                 }
                 Cidades *cidadeSelecionada = buscarCidade(listaCidades, nomeCidade);
                 if (cidadeSelecionada == NULL) {
-                    printf("Cidade não encontrada!\n");
+                    printf("\nCidade não encontrada!\n");
                     break;
                 }
                 definirViagem(viagemProgramada, cidadeSelecionada, duracao);
                 
                 // questionario para experiencia personalizada
-                printf("\nPara garantir uma experiência única, responda o questionário a seguir:\n");
-                printf("Com ele montaremos um roteiro de viagem exclusivo para você, de acordo com suas preferências pessoais.");
+                printf("\nPara garantir uma experiência única, responda o questionário a seguir.\n");
+                printf("Com ele montaremos um roteiro de viagem exclusivo para você, de acordo com suas preferências pessoais.\n");
                 aplicarQuestionario(&natureza, &cultural, &festivo, &relaxante);
                 
-                printf("Prontinho! Agora já temos organizada uma viagem inesquecível para você!\n O que deseja fazer?\n");
+                printf("Prontinho! Agora já temos organizada uma viagem inesquecível para você!\nO que deseja fazer?\n");
                 
                 // aplica pontuação nas atrações de cada cidade
                 Cidades* cidadeAtual = listaCidades;
