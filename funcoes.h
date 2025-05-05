@@ -6,7 +6,7 @@ typedef enum { NATUREZA, CULTURAL, FESTIVO, RELAXANTE } Tag;
 
 // Lista circular de atrações
 typedef struct atracoes {
-    char atracao[40];
+    char atracao[100];
     Tag categoria;
     char descricao[100];
     char descricaoHorario[50];
