@@ -272,7 +272,7 @@ void menuAdministrativo(Cidades **lista) {
         }
     }
     do {
-        printf("\n\t MENU ADMINISTRATIVO \tn\n");
+        printf("\n\t MENU ADMINISTRATIVO \t\n");
         printf("1 - Adicionar cidade\n");
         printf("2 - Remover cidade\n");
         printf("3 - Adicionar atração.\n");
