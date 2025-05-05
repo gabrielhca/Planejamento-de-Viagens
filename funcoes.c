@@ -8,134 +8,6 @@ Cidades* criaListaVazia (){
     return NULL;
 }
 
-/*Função para inserção no inicio da cidade utilizando ponteiros duplos*/
-void inserirnoInicioCidade (Cidades** lista, Cidades novaCidade){
-    Cidades* nova = (Cidades*)malloc(sizeof(Cidades));
-    if (nova == NULL) {
-        printf ("Erro na alocação de memória da Cidade!\n");
-        return;
-    }
-    strcpy(nova->cidade, novaCidade.cidade);
-    nova->atracao = (Descritor *)malloc(sizeof(Descritor));
-    if (nova->atracao == NULL) {
-        printf("Erro ao alocar memória para descritor de atrações.\n");
-        free(nova);
-        return;
-    }
-    nova->atracao->cauda = NULL;
-    nova->atracao->quantidade = 0;
-
-    nova->ant = NULL; 
-    nova->prox = *lista;
-
-    if(*lista != NULL){
-        (*lista)->ant = nova; 
-    }
-    *lista = nova;
-}
-
-/*Função para inserção de atrações. Utiliza o descritor como parametro e a lista de atrações. Faz a inserção no final da lista circular de atraçóes.*/
-void inserirAtracao(Descritor *d, Atracoes novaAtracao){
-    Atracoes *nova = malloc(sizeof(Atracoes));
-    if (!nova){
-        printf("Erro na alocação de memória da Atração!\n");
-        return;
-    }
-
-    *nova = novaAtracao;
-    nova->prox = nova->ant = NULL;
-
-    if (d->cauda == NULL) {
-        // Lista vazia: nova aponta para si mesma
-        nova->prox = nova->ant = nova;
-        d->cauda = nova;
-    } else {
-        // Insere após a cauda atual (fim da lista circular)
-        Atracoes *primeiro = d->cauda->prox;
-        nova->prox = primeiro;
-        nova->ant = d->cauda;
-        d->cauda->prox = nova;
-        primeiro->ant = nova;
-        d->cauda = nova;       // nova vira a nova cauda
-    }
-
-    d->quantidade++;  // incrementa o total
-}
-
-/* Função que faz a aplicação do questionário para o usuário, onde foi realizada a divisão do tipo de atividade nas categorias de natureza, cultural, 
-festivo e relaxante. As perguntas são feitas de acordo com as categorias e é acumulado a quantidade de pontos por tipo de atração para montar o roteiro.*/
-void aplicarQuestionario(int *natureza, int *cultural, int *festivo, int *relaxante) {
-    int resposta;
-
-    printf("Responda com o número da opção escolhida.\n\n");
-
-    // Pergunta 1
-    do {
-        printf("1) Você prefere passar o dia em contato com a natureza ou em um ambiente urbano cheio de opções modernas?\n");
-        printf("   1 - Natureza\n   2 - Urbano\n> ");
-        scanf("%d", &resposta);
-        if (resposta == 1) *natureza += 5;
-        else if (resposta == 2) *festivo += 5;
-        else printf("Resposta incorreta. Tente novamente.\n");
-    } while (resposta != 1 && resposta != 2);
-
-    // Pergunta 2
-    do {
-        printf("2) Você gostaria mais de visitar um museu histórico ou curtir uma festa local?\n");
-        printf("   1 - Museu\n   2 - Festa\n> ");
-        scanf("%d", &resposta);
-        if (resposta == 1) *cultural += 5;
-        else if (resposta == 2) *festivo += 5;
-        else printf("Resposta incorreta. Tente novamente.\n");
-    } while (resposta != 1 && resposta != 2);
-
-    // Pergunta 3
-    do {
-        printf("3) Você busca relaxar em lugares tranquilos ou viver experiências cheias de adrenalina?\n");
-        printf("   1 - Tranquilos\n   2 - Adrenalina\n> ");
-        scanf("%d", &resposta);
-        if (resposta == 1) *relaxante += 5;
-        else if (resposta == 2) *natureza += 5;
-        else printf("Resposta incorreta. Tente novamente.\n");
-    } while (resposta != 1 && resposta != 2);
-
-    // Pergunta 4
-    do {
-        printf("4) Você se sente mais confortável em locais silenciosos ou agitados?\n");
-        printf("   1 - Silenciosos\n   2 - Agitados\n> ");
-        scanf("%d", &resposta);
-        if (resposta == 1) *relaxante += 5;
-        else if (resposta == 2) *festivo += 5;
-        else printf("Resposta incorreta. Tente novamente.\n");
-    } while (resposta != 1 && resposta != 2);
-}
-
-/*A função recebe como parametro o descritor que está associado à lista de atrações e os dados do questionário. A função aplica a pontuação nas atrações que
-estão distribuidas de acordo com as categorias definidas. Dessa forma conseguimos priorizar qual atração será feita em que ordem.*/
-void aplicarPontuacaoNasAtracoes(Descritor *d, int natureza, int cultural, int festivo, int relaxante) {
-    if (d->cauda == NULL) return;
-
-    Atracoes *inicio = d->cauda->prox;
-    Atracoes *aux = inicio;
-    do {
-        switch (aux->categoria) {
-            case NATUREZA:
-                aux->pontuacao += natureza;
-                break;
-            case CULTURAL:
-                aux->pontuacao += cultural;
-                break;
-            case FESTIVO:
-                aux->pontuacao += festivo;
-                break;
-            case RELAXANTE:
-                aux->pontuacao += relaxante;
-                break;
-        }
-        aux = aux->prox;
-    } while (aux != inicio);
-}
-
 /*Função que carrega os dados do arquivo 'cidadesAtracoes.txt', no formato: NomeCidade;NomeAtracao;Categoria;Descricao;DescricaoHorario. 
 A função insere cidades e atrações na estrutura de dados conforme lidas. */
 void carregarDados(Cidades **listaCidades) {
@@ -224,35 +96,30 @@ void listarCidadesComAtracoes(Cidades *lista) {
     }
 }
 
-/*mostra o ranking das atracoes de acordo com a pontuacao*/
-void mostrarRanking(Descritor *d) {
-    if (d == NULL || d->cauda == NULL) {
-        printf("Nenhuma atração cadastrada.\n");
-        return;
+//Função para definir a viagem e a estadia. 
+void definirViagem(Viagem* viagem, Cidades* cidade, int dias) {
+    viagem->cidade = cidade;
+    viagem->duracaoEstadia = dias;
+
+    printf("Viagem definida: %s por %d dias.\n", cidade->cidade, dias);
+}
+
+//Função para buscar para qual cidade a pessoa irá viajar. Verifica se a cidade existe na lista, se sim, retorna a cidade) 
+Cidades* buscarCidade(Cidades* lista, const char *nome) {
+    Cidades* atual = lista;
+
+    while (atual != NULL) {          
+        if (strcmp(atual->cidade, nome) == 0) {
+            return atual; // Retorna a cidade encontrada
+        }
+        atual = atual->prox;
     }
 
-    printf("\n\t ATRAÇÕES PRIORITÁRIAS \t\n");
-    Atracoes *atual = d->cauda->prox;
-    int cont = 0;
-    
-    // Primeiro mostra as com pontuação
-    do {
-        if (atual->pontuacao > 0) {
-            printf("%d. %s\n", ++cont, atual->atracao);
-        }
-        atual = atual->prox;
-    } while (atual != d->cauda->prox);
-
-    printf("\n\t ATRAÇÕES SECUNDÁRIAS \t\n");
-    cont = 0;
-    atual = d->cauda->prox;
-    do {
-        if (atual->pontuacao == 0) {
-            printf("%d. %s\n", ++cont, atual->atracao);
-        }
-        atual = atual->prox;
-    } while (atual != d->cauda->prox);
+    printf("Cidade %s não encontrada.\n", nome);
+    return NULL;
 }
+
+// FUNÇÕES DO MENU ADMINISTRATIVO
 
 /*abre o menu administrativo que tem as opcoes de adicionar cidade/atracao, remover cidade/atracao,*/
 void menuAdministrativo(Cidades **lista) {
@@ -364,65 +231,60 @@ void menuAdministrativo(Cidades **lista) {
     } while (opcao != 5);
 }
 
-//Função para definir a viagem e a estadia. 
-void definirViagem(Viagem* viagem, Cidades* cidade, int dias) {
-    viagem->cidade = cidade;
-    viagem->duracaoEstadia = dias;
+/*Função para inserção no inicio da cidade utilizando ponteiros duplos*/
+void inserirnoInicioCidade (Cidades** lista, Cidades novaCidade){
+    Cidades* nova = (Cidades*)malloc(sizeof(Cidades));
+    if (nova == NULL) {
+        printf ("Erro na alocação de memória da Cidade!\n");
+        return;
+    }
+    strcpy(nova->cidade, novaCidade.cidade);
+    nova->atracao = (Descritor *)malloc(sizeof(Descritor));
+    if (nova->atracao == NULL) {
+        printf("Erro ao alocar memória para descritor de atrações.\n");
+        free(nova);
+        return;
+    }
+    nova->atracao->cauda = NULL;
+    nova->atracao->quantidade = 0;
 
-    printf("Viagem definida: %s por %d dias.\n", cidade->cidade, dias);
+    nova->ant = NULL; 
+    nova->prox = *lista;
+
+    if(*lista != NULL){
+        (*lista)->ant = nova; 
+    }
+    *lista = nova;
 }
 
-//Função para buscar para qual cidade a pessoa irá viajar. Verifica se a cidade existe na lista, se sim, retorna a cidade) 
-Cidades* buscarCidade(Cidades* lista, const char *nome) {
-    Cidades* atual = lista;
-
-    while (atual != NULL) {          
-        if (strcmp(atual->cidade, nome) == 0) {
-            return atual; // Retorna a cidade encontrada
-        }
-        atual = atual->prox;
+/*Função para inserção de atrações. Utiliza o descritor como parametro e a lista de atrações. Faz a inserção no final da lista circular de atraçóes.*/
+void inserirAtracao(Descritor *d, Atracoes novaAtracao){
+    Atracoes *nova = malloc(sizeof(Atracoes));
+    if (!nova){
+        printf("Erro na alocação de memória da Atração!\n");
+        return;
     }
 
-    printf("Cidade %s não encontrada.\n", nome);
-    return NULL;
+    *nova = novaAtracao;
+    nova->prox = nova->ant = NULL;
+
+    if (d->cauda == NULL) {
+        // Lista vazia: nova aponta para si mesma
+        nova->prox = nova->ant = nova;
+        d->cauda = nova;
+    } else {
+        // Insere após a cauda atual (fim da lista circular)
+        Atracoes *primeiro = d->cauda->prox;
+        nova->prox = primeiro;
+        nova->ant = d->cauda;
+        d->cauda->prox = nova;
+        primeiro->ant = nova;
+        d->cauda = nova;       // nova vira a nova cauda
+    }
+
+    d->quantidade++;  // incrementa o total
 }
 
-/*Função que ordena as atrações por pontuação. A ordenação é feita trocando os dados da cidade com maior pontuação pela de menor pontuação, se esta estiver
-numa posição superior à ela. */
-void ordenarAtracoesPontuacao(Descritor *d) {
-    if (d == NULL || d->cauda == NULL) return;
-
-    int trocou;
-    Atracoes *atual;
-    Atracoes *ultimo = NULL;
-
-    do {
-        trocou = 0;
-        atual = d->cauda->prox; // Começa do primeiro elemento
-
-        while (atual->prox != d->cauda->prox && atual->prox != ultimo) {
-            if (atual->pontuacao < atual->prox->pontuacao) { // Ordena DESCENDENTE
-                // Troca os dados mantendo a integridade da lista circular
-                Atracoes temp = *atual;
-                
-                // Troca nome
-                strcpy(atual->atracao, atual->prox->atracao);
-                strcpy(atual->prox->atracao, temp.atracao);
-                
-                // Troca outros campos
-                atual->categoria = atual->prox->categoria;
-                atual->prox->categoria = temp.categoria;
-                
-                atual->pontuacao = atual->prox->pontuacao;
-                atual->prox->pontuacao = temp.pontuacao;
-                
-                trocou = 1;
-            }
-            atual = atual->prox;
-        }
-        ultimo = atual;
-    } while (trocou);
-}
 /*Função de remover cidade, utiliza como parametro lista do tipo Cidades e nome, para que possamos buscar a cidade. reaproveitamos a função de buscarCidade
 para poder localizar e retornar a cidade que queremos remover.*/
 void removerCidade(Cidades **lista, const char nome[]){
@@ -483,6 +345,149 @@ void removerAtracao(Descritor *d, const char *nome) {
     } while (atual != inicio);
 
     printf("Atração \"%s\" não localizada.\n", nome);
+}
+
+// FUNÇÕES DE PERSONALIZAÇÃO
+
+/* Função que faz a aplicação do questionário para o usuário, onde foi realizada a divisão do tipo de atividade nas categorias de natureza, cultural, 
+festivo e relaxante. As perguntas são feitas de acordo com as categorias e é acumulado a quantidade de pontos por tipo de atração para montar o roteiro.*/
+void aplicarQuestionario(int *natureza, int *cultural, int *festivo, int *relaxante) {
+    int resposta;
+
+    printf("Responda com o número da opção escolhida.\n\n");
+
+    // Pergunta 1
+    do {
+        printf("1) Você prefere passar o dia em contato com a natureza ou em um ambiente urbano cheio de opções modernas?\n");
+        printf("   1 - Natureza\n   2 - Urbano\n> ");
+        scanf("%d", &resposta);
+        if (resposta == 1) *natureza += 5;
+        else if (resposta == 2) *festivo += 5;
+        else printf("Resposta incorreta. Tente novamente.\n");
+    } while (resposta != 1 && resposta != 2);
+
+    // Pergunta 2
+    do {
+        printf("2) Você gostaria mais de visitar um museu histórico ou curtir uma festa local?\n");
+        printf("   1 - Museu\n   2 - Festa\n> ");
+        scanf("%d", &resposta);
+        if (resposta == 1) *cultural += 5;
+        else if (resposta == 2) *festivo += 5;
+        else printf("Resposta incorreta. Tente novamente.\n");
+    } while (resposta != 1 && resposta != 2);
+
+    // Pergunta 3
+    do {
+        printf("3) Você busca relaxar em lugares tranquilos ou viver experiências cheias de adrenalina?\n");
+        printf("   1 - Tranquilos\n   2 - Adrenalina\n> ");
+        scanf("%d", &resposta);
+        if (resposta == 1) *relaxante += 5;
+        else if (resposta == 2) *natureza += 5;
+        else printf("Resposta incorreta. Tente novamente.\n");
+    } while (resposta != 1 && resposta != 2);
+
+    // Pergunta 4
+    do {
+        printf("4) Você se sente mais confortável em locais silenciosos ou agitados?\n");
+        printf("   1 - Silenciosos\n   2 - Agitados\n> ");
+        scanf("%d", &resposta);
+        if (resposta == 1) *relaxante += 5;
+        else if (resposta == 2) *festivo += 5;
+        else printf("Resposta incorreta. Tente novamente.\n");
+    } while (resposta != 1 && resposta != 2);
+}
+
+/*A função recebe como parametro o descritor que está associado à lista de atrações e os dados do questionário. A função aplica a pontuação nas atrações que
+estão distribuidas de acordo com as categorias definidas. Dessa forma conseguimos priorizar qual atração será feita em que ordem.*/
+void aplicarPontuacaoNasAtracoes(Descritor *d, int natureza, int cultural, int festivo, int relaxante) {
+    if (d->cauda == NULL) return;
+
+    Atracoes *inicio = d->cauda->prox;
+    Atracoes *aux = inicio;
+    do {
+        switch (aux->categoria) {
+            case NATUREZA:
+                aux->pontuacao += natureza;
+                break;
+            case CULTURAL:
+                aux->pontuacao += cultural;
+                break;
+            case FESTIVO:
+                aux->pontuacao += festivo;
+                break;
+            case RELAXANTE:
+                aux->pontuacao += relaxante;
+                break;
+        }
+        aux = aux->prox;
+    } while (aux != inicio);
+}
+
+/*Função que ordena as atrações por pontuação. A ordenação é feita trocando os dados da cidade com maior pontuação pela de menor pontuação, se esta estiver
+numa posição superior à ela. */
+void ordenarAtracoesPontuacao(Descritor *d) {
+    if (d == NULL || d->cauda == NULL) return;
+
+    int trocou;
+    Atracoes *atual;
+    Atracoes *ultimo = NULL;
+
+    do {
+        trocou = 0;
+        atual = d->cauda->prox; // Começa do primeiro elemento
+
+        while (atual->prox != d->cauda->prox && atual->prox != ultimo) {
+            if (atual->pontuacao < atual->prox->pontuacao) { // Ordena DESCENDENTE
+                // Troca os dados mantendo a integridade da lista circular
+                Atracoes temp = *atual;
+                
+                // Troca nome
+                strcpy(atual->atracao, atual->prox->atracao);
+                strcpy(atual->prox->atracao, temp.atracao);
+                
+                // Troca outros campos
+                atual->categoria = atual->prox->categoria;
+                atual->prox->categoria = temp.categoria;
+                
+                atual->pontuacao = atual->prox->pontuacao;
+                atual->prox->pontuacao = temp.pontuacao;
+                
+                trocou = 1;
+            }
+            atual = atual->prox;
+        }
+        ultimo = atual;
+    } while (trocou);
+}
+
+/*mostra o ranking das atracoes de acordo com a pontuacao*/
+void mostrarRanking(Descritor *d) {
+    if (d == NULL || d->cauda == NULL) {
+        printf("Nenhuma atração cadastrada.\n");
+        return;
+    }
+
+    printf("\n\t ATRAÇÕES PRIORITÁRIAS \t\n");
+    Atracoes *atual = d->cauda->prox;
+    int cont = 0;
+    
+    // Primeiro mostra as com pontuação
+    do {
+        if (atual->pontuacao > 0) {
+            printf("%d. %s\n", ++cont, atual->atracao);
+        }
+        atual = atual->prox;
+    } while (atual != d->cauda->prox);
+
+    printf("\n\t ATRAÇÕES SECUNDÁRIAS \t\n");
+    cont = 0;
+    atual = d->cauda->prox;
+    do {
+        if (atual->pontuacao == 0) {
+            printf("%d. %s\n", ++cont, atual->atracao);
+        }
+        atual = atual->prox;
+    } while (atual != d->cauda->prox);
 }
 
 /*Após a realização do questionário e da organização das atrações de acordo com a pontuação, é feita a impressão do roteiro de acordo com as preferencias do
