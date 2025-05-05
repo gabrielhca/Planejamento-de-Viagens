@@ -103,8 +103,9 @@ int main() {
                 break;
             default:
                 printf("Opção inválida!\n");
+                break;
         }
-    }while (opcao != 5);
+    }while (opcao != 4);
 
     liberarMemoria(listaCidades);
 
